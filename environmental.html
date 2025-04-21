@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Environmental Lawyers India</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+        color: #ffffff;
+        line-height: 1.6;
+      }
+      header {
+        background: linear-gradient(
+          to left,
+          rgba(244, 181, 99, 0.807) 0%,
+          rgba(150, 216, 239, 0.811) 100%
+        );
+        text-align: center;
+        padding: 30px 10px 10px 10px;
+        margin-bottom: 40px;
+        box-shadow: 0 2px 10px rgb(240, 233, 233);
+      }
+      h1 {
+        font-size: 4.5rem;
+        margin: 20px 0;
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: 900;
+        line-height: 1.1;
+      }
+      h1 span {
+        color: #5a2e0f; /* Dark brown */
+        font-weight: bold;
+        display: block;
+        font-size: 5.2rem;
+      }
+      .profiles-section {
+        max-width: 1200px;
+        margin: 0 auto 60px;
+        padding: 0 20px;
+      }
+      .profiles-heading {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #3a7bd5;
+        margin-bottom: 40px;
+        text-align: center;
+        letter-spacing: 1px;
+      }
+      .profiles-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+      .profile-card {
+        background: #fff;
+        width: 280px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 20px;
+      }
+      .profile-card:hover {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+      }
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Crop image to fill container */
+        object-position: center top; /* Focus on top (face area) */
+        background-color: #f0f0f0;
+        transition: transform 0.3s ease;
+      }
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.3s ease;
+      }
+      .profile-card:hover .image-container img {
+        transform: scale(1.05);
+      }
+      .profile-info {
+        padding: 15px;
+      }
+      .profile-info h3 {
+        margin: 10px 0 8px;
+        font-size: 1.5rem;
+        color: #3a7bd5;
+        font-weight: 700;
+        text-transform: capitalize;
+      }
+      .profile-info p {
+        margin: 4px 0;
+        font-size: 1rem;
+        color: #555;
+      }
+      footer {
+        background: linear-gradient(
+          to left,
+          rgba(251, 173, 71, 0.84) 0%,
+          rgba(120, 215, 249, 0.811) 100%
+        );
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+        font-size: 1rem;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
+      }
+      @media (max-width: 900px) {
+        .profiles-container {
+          flex-direction: column;
+          align-items: center;
+        }
+        .profile-card {
+          width: 90%;
+          max-width: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Environmental <span>Lawyers India</span></h1>
+    </header>
+
+    <section class="profiles-section">
+      <div class="profiles-heading">Meet Our Environmental Law Experts</div>
+      <div class="profiles-container">
+        <!-- Lawyer 1 -->
+        <div class="profile-card">
+          <div class="image-container">
+            <img
+              src="https://thumbs.dreamstime.com/b/portrait-serious-indian-lawyer-leather-folder-professional-lawyer-136788706.jpg"
+              alt="Advocate Nawneet Vibhaw"
+            />
+          </div>
+          <div class="profile-info">
+            <h3>Advocate Nawneet Vibhaw</h3>
+            <p><strong>Specialization:</strong> Environmental Disputes & ESG</p>
+            <p><strong>Experience:</strong> 16+ years</p>
+            <p><strong>Location:</strong> New Delhi</p>
+            <p><strong>Languages:</strong> Hindi, English</p>
+            <p>
+              Leading expert in environmental law, litigations, and ESG
+              advisory, with a global outlook.
+            </p>
+          </div>
+        </div>
+
+        <!-- Lawyer 2 -->
+        <div class="profile-card">
+          <div class="image-container">
+            <img
+              src="https://s3.scoopwhoop.com/anj/d/e12a6dd7-ad0e-4aa3-b284-98d9e2e1e809.jpg"
+              alt="Adv. Ritwick Dutta"
+            />
+          </div>
+          <div class="profile-info">
+            <h3>Adv. Ritwick Dutta</h3>
+            <p><strong>Specialization:</strong> Forest & Water Law</p>
+            <p><strong>Experience:</strong> 20+ years</p>
+            <p><strong>Location:</strong> Kolkata</p>
+            <p><strong>Languages:</strong> Hindi, Bengali, English</p>
+            <p>
+              Founder of LIFE Initiative, renowned for landmark environmental
+              litigations in India.
+            </p>
+          </div>
+        </div>
+
+        <!-- Lawyer 3 -->
+        <div class="profile-card">
+          <div class="image-container">
+            <img
+              src="https://i.pinimg.com/originals/08/34/4d/08344df830516125deb7b326f51be4d8.jpg"
+              alt="Adv. M.C. Mehta"
+            />
+          </div>
+          <div class="profile-info">
+            <h3>M.C. Mehta</h3>
+            <p>
+              <strong>Specialization:</strong> Pollution Control & Landmark
+              Litigation
+            </p>
+            <p><strong>Experience:</strong> 40+ years</p>
+            <p><strong>Location:</strong> Delhi</p>
+            <p><strong>Languages:</strong> Hindi, English</p>
+            <p>
+              Iconic environmental lawyer, credited with landmark judgments for
+              pollution reduction and conservation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>&copy; 2025 Environment Lawyers India. All rights reserved.</footer>
+  </body>
+</html>

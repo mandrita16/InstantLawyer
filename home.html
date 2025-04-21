@@ -1,0 +1,772 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Law Connect</title>
+    <style>
+                                        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+                                        body {
+                                          font-family: 'Poppins', sans-serif;
+                                          background-color: #f8f9fa;
+                                          margin: 0;
+                                          padding: 0;
+                                          text-align: center;
+                                          color: #343a40;
+                                        }
+
+                                        .animated-text {
+                                          font-size: 2.5rem;
+                                          font-weight: bold;
+                                          color: #ff5733;
+                                          overflow: hidden;
+                                          white-space: nowrap;
+                                          display: inline-block;
+                                          position: relative;
+                                        }
+
+                                        .highlight {
+                                          background: linear-gradient(to right, #ff7e5f, #feb47b);
+                                          -webkit-background-clip: text;
+                                          -webkit-text-fill-color: transparent;
+                                          font-weight: bold;
+                                        }
+
+                                        .animated-text span {
+                                          display: inline-block;
+                                          opacity: 0;
+                                          transform: translateY(20px);
+                                          animation: fadeInUp 0.5s forwards;
+                                        }
+
+                                        @keyframes fadeInUp {
+                                          from {
+                                            opacity: 0;
+                                            transform: translateY(20px);
+                                          }
+                                          to {
+                                            opacity: 1;
+                                            transform: translateY(0);
+                                          }
+                                        };
+                                          }
+
+                                          header {
+                                            background: rgba(255, 153, 102, 0.8);
+                                            color: white;
+                                            text-align: center;
+                                            padding: 20px;
+                                            font-size: 2rem;
+                                            font-weight: bold;
+                                            backdrop-filter: blur(10px);
+                                          }
+
+                                          nav {
+                                      background: #f79274;
+                                      padding: 10px;
+                                    }
+                                    nav a {
+                                      color: white;
+                                      text-decoration: none;
+                                      margin: 0 15px;
+                                      font-size: 1.2rem;
+                                      font-weight: bold;
+                                      padding: 10px 15px;
+                                      border-radius: 5px;
+                                      transition: background 0.3s;
+                                    }
+                                    nav a:hover {
+                                      background: rgba(255, 255, 255, 0.3);
+                                    }
+
+                                    .gallery img {
+            width: 100%;
+            flex-shrink: 0;
+            border-radius: 10px;
+            text-align: center;
+            position: relative; /* Add this to position the watermark */
+        }
+
+        .gallery img::after {
+            content: '© Instant Lawyer'; /* Watermark text */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+            font-size: 20px;
+            font-weight: bold;
+            pointer-events: none; /* Make sure it doesn't interfere with clicks */
+        }
+
+ /* START OF WATERMARK CODE */
+ .gallery img::after {
+        content: ""; /* Empty content since we're using an image */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px; /* Adjust as needed */
+        height: auto; /* Maintain aspect ratio */
+        background-image: url("https://tse4.mm.bing.net/th?id=OIP.ahfIiUs-3UxA40SsPlRVBgHaD6&pid=Api&P=0&h=180"); /* Replace with your image URL */
+        background-repeat: no-repeat;
+        background-size: contain; /* Ensure the image fits within the container */
+        opacity: 0.3; /* Adjust transparency */
+        pointer-events: none; /* Prevent the watermark from interfering with clicks */
+      }
+      /* END OF WATERMARK CODE */
+
+
+
+                                          .hero {
+                                            text-align: center;
+                                            padding: 90px;
+                                            background: rgba(255, 204, 153, 0.7);
+                                            color: black;
+                                            border-radius: 20px;
+                                            margin: 20px;
+                                            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+                                            backdrop-filter: blur(10px);
+                                          }
+                                          .hero button {
+                                              padding: 10px 20px;
+                                              background: #ff9800;
+                                              color: white;
+                                              font-size: 1.8rem;
+                                              border: none;
+                                              cursor: pointer;
+                                              margin-top: 10px;
+                                              border-radius: 5px;
+                                              transition: background 0.3s;
+                                          }
+
+                                          .hero button:hover {
+                                              background: #e68900;
+                                          }
+                                          .hero {
+  background: linear-gradient(
+    135deg,
+    rgba(251, 173, 71, 0.84) 0%,
+    rgba(120, 215, 249, 0.811) 100%
+  );
+  color: #333;
+  padding: 80px 20px;
+  border-radius: 20px;
+  margin: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.hero p {
+  font-size: 1.4rem;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  line-height: 1.6;
+}
+
+.hero button {
+  padding: 15px 30px;
+  background: #ff5733;
+  color: white;
+  font-size: 1.3rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hero button:hover {
+  background: #e64a19;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+                                          .about-us {
+                                            text-align: center;
+                                            padding: 60px;
+                                            background: white;
+                                            margin: 20px;
+                                            border-radius: 20px;
+                                            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+                                            transition: transform 0.3s ease-in-out;
+                                          }
+
+                                          .about-us:hover {
+                                            transform: scale(1.05);
+                                          }
+
+                                          .about-us h2 {
+                                            font-size: 2.8rem;
+                                            font-weight: bold;
+                                            color: #ff5733;
+                                            margin-bottom: 20px;
+                                          }
+
+                                          .about-us p {
+                                            font-size: 1.2rem;
+                                            color: #333;
+                                            line-height: 1.6;
+                                            max-width: 800px;
+                                            margin: 0 auto;
+                                          }
+                                          background-color: #111;
+                                          color: white;
+                                          display: flex;
+                                          justify-content: center;
+                                          align-items: center;
+                                          height: 100vh;
+                                          overflow: hidden;
+                                      }
+                                      {
+                                          display: flex;
+                                          justify-content: center;
+                                          align-items: center;
+                                          height: 100vh;
+                                          background-color: #111;
+                                          margin: 0;
+                                          overflow: hidden;
+                                      }
+                                      .gallery-container {
+                                          position: relative;
+                                          width: 80%;
+                                          max-width: 900px;
+                                          overflow: hidden;
+                                          border-radius: 10px;
+                                          box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+                                          text-align: center;
+                                      }
+                                      .gallery {
+                                          display: flex;
+                                          transition: transform 0.5s ease-in-out;
+                                          text-align: center;
+                                      }
+                                      .gallery img {
+                                          width: 100%;
+                                          flex-shrink: 0;
+                                          border-radius: 10px;
+                                          text-align: center;
+                                      }
+                                      .controls {
+                                          position: absolute;
+                                          top: 50%;
+                                          width: 100%;
+                                          display: flex;
+                                          justify-content: space-between;
+                                          transform: translateY(-50%);
+                                      }
+                                      .controls button {
+                                          background: rgba(0, 0, 0, 0.6);
+                                          color: rgb(241, 80, 80);
+                                          border: none;
+                                          padding: 10px 20px;
+                                          cursor: pointer;
+                                          font-size: 18px;
+                                          border-radius: 5px;
+                                      }
+                                      .controls button:hover {
+                                          background: rgba(0, 0, 0, 0.8);
+                                      }
+                                      .grid-container {
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                                gap: 20px;
+                              }
+
+                              .grid-item {
+                                background: linear-gradient(
+                                          135deg,
+                                          rgba(251, 173, 71, 0.84) 0%,
+                                          rgba(120, 215, 249, 0.811) 100%
+                                        );
+                                color: rgb(14, 13, 13);
+                                padding: 50px;
+                                border-radius: 10px;
+                                text-align: center;
+                              }
+                              .grid-item img {
+              width: 100px; /* Adjust as needed */
+              height: 100px; /* Adjust as needed */
+              margin-bottom: 10px;
+            }
+
+
+
+                              .grid-item:hover {
+                                transform: scale(0.05);
+                              }
+                              .search-container input {
+                          width: calc(100% - 40px);
+                          padding: 10px;
+                          margin-bottom: 20px;
+                        }
+                        .video-container {
+        margin-top: 20px;
+      }
+
+      .video-container video {
+        max-width: 100%;
+        border-radius: 10px;
+      }
+
+                                          .stats {
+                                            text-align: center;
+                                            padding: 40px;
+                                            background: #fff;
+                                            margin: 20px;
+                                            border-radius: 20px;
+                                            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+                                            font-size: 2rem;
+                                            font-weight: bold;
+                                          }
+
+                                          .counter {
+                                            color: #ff5733;
+                                            font-size: 3rem;
+                                          }
+                                          .advantages {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 30px 20px;
+}
+
+.advantages h2 {
+  font-size: 2.4rem;
+  color: #333;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.advantage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  justify-content: center;
+  padding: 0 20px;
+}
+
+.advantage-item {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease-in-out;
+}
+
+.advantage-item:hover {
+  transform: translateY(-5px);
+}
+
+.advantage-item img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 20px;
+}
+
+.advantage-item h3 {
+  font-size: 1.4rem;
+  color: #333;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.advantage-item p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+                                          .testimonials {
+                                            text-align: center;
+                                            padding: 40px;
+                                            background: white;
+                                            margin: 20px;
+                                            border-radius: 20px;
+                                            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+                                          }
+
+                                          .testimonial-container {
+                                            display: flex;
+                                            justify-content: center;
+                                            gap: 20px;
+                                            flex-wrap: wrap;
+                                          }
+
+                                          .testimonial {
+                                            background: rgba(255, 204, 153, 0.7);
+                                            padding: 20px;
+                                            border-radius: 10px;
+                                            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+                                            max-width: 300px;
+                                            text-align: center;
+                                          }
+
+
+                                          .testimonial img {
+                                            width: 80px;
+                                            height: 80px;
+                                            border-radius: 50%;
+                                            margin-bottom: 10px;
+                                          }
+
+                                          .testimonial p {
+                                            font-size: 1rem;
+                                            color: black;
+                                          }
+                                          .center-image {
+                                             text-align: center;
+                                          }
+
+
+                                          footer {
+                                            background: rgba(255, 153, 102, 0.8);
+                                            color: white;
+                                            text-align: center;
+                                            padding: 15px;
+                                            margin-top: 20px;
+                                            backdrop-filter: blur(10px);
+                                          }
+    </style>
+  </head>
+  <body>
+    <h1 class="animated-text">
+      <span style="animation-delay: 0s">W</span>
+      <span style="animation-delay: 0.1s">e</span>
+      <span style="animation-delay: 0.2s">l</span>
+      <span style="animation-delay: 0.3s">c</span>
+      <span style="animation-delay: 0.4s">o</span>
+      <span style="animation-delay: 0.5s">m</span>
+      <span style="animation-delay: 0.6s">e</span>
+      <span style="animation-delay: 0.7s">&nbsp;</span>
+      <span style="animation-delay: 0.8s">t</span>
+      <span style="animation-delay: 0.9s">o</span>
+      <span style="animation-delay: 1s">&nbsp;</span>
+      <span class="highlight" style="animation-delay: 1.1s">L</span>
+      <span class="highlight" style="animation-delay: 1.2s">a</span>
+      <span class="highlight" style="animation-delay: 1.3s">w</span>
+      <span class="highlight" style="animation-delay: 1.4s">&nbsp;</span>
+      <span class="highlight" style="animation-delay: 1.5s">C</span>
+      <span class="highlight" style="animation-delay: 1.6s">o</span>
+      <span class="highlight" style="animation-delay: 1.7s">n</span>
+      <span class="highlight" style="animation-delay: 1.8s">n</span>
+      <span class="highlight" style="animation-delay: 1.9s">e</span>
+      <span class="highlight" style="animation-delay: 2s">c</span>
+      <span class="highlight" style="animation-delay: 2.1s">t</span>
+    </h1>
+      
+    <!-- <header>
+      <div class="logo">Instant Lawyer</div>
+    </header>
+
+    <nav>
+      <a href="#about">About Us</a>
+      <a href="#services">Services</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  -->
+    <nav>
+      <a href="#about">About Us</a>
+      <a href="#lawyers">Lawyers</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="login.html">Login</a>
+    </nav>
+    <section class="hero">
+      <h1>Enter Smart Legal Solutions !! </h1>
+      <p>Find your legal support instantly.</p>
+      <!-- Button to navigate to the login page -->
+      <button onclick="window.location.href='login.html'">Go to Login</button>
+    </section>
+
+    <section class="about-us" id="about">
+      <h2>About Us</h2>
+      <p>
+        Instant Lawyer is your trusted legal partner, making expert legal
+        assistance accessible and convenient. Our seasoned professionals are
+        dedicated to providing strategic guidance tailored to your needs. With
+        years of experience and a commitment to excellence, we empower
+        individuals and businesses with seamless legal solutions. Your legal
+        journey, simplified.
+      </p>
+
+      <div class="video-container">
+        <video controls width="560" height="315">
+          <source src="your-video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+     
+    <section class="stats">
+      <p>Users Registered: <span id="userCount" class="counter">1+</span></p>
+      <p>Lawyers Available: <span id="lawyerCount" class="counter">1+</span></p>
+    </section>
+    
+
+    
+      <div class="gallery-container">
+        <div class="gallery" id="gallery" style="text-align: center;">
+          <img
+            src="https://mgb.law/wp-content/uploads/2021/03/indian-lawyer-and-client.jpg"
+            alt="Image 1"
+          />
+          <img
+            src="https://cdndailyexcelsior.b-cdn.net/wp-content/uploads/2022/12/Page10-6.jpg"
+          />
+          <img
+            src="https://cch.edu.pk/wp-content/uploads/2023/01/321571411_821733215524333_6890622047680346994_n-1200x600.jpg"
+          />
+          <img src="https://source.unsplash.com/random/200x300?sig=4" />
+        </div>
+        <div class="controls">
+          <button onclick="prevSlide()">&#10094;</button>
+          <button onclick="nextSlide()">&#10095;</button>
+        </div>
+      </div>
+
+      <script>
+        let index = 0;
+        const gallery = document.getElementById("gallery");
+        const images = document.querySelectorAll(".gallery img");
+
+        function showSlide(i) {
+          index = (i + images.length) % images.length;
+          gallery.style.transform = translateX(-${index * 100}%);
+        }
+        function nextSlide() {
+          showSlide(index + 1);
+        }
+        function prevSlide() {
+          showSlide(index - 1);
+        }
+      </script>
+    </section>
+
+    <script>
+      function animateCounter(id, start, end, duration) {
+        let obj = document.getElementById(id);
+        let range = end - start;
+        let current = start;
+        let increment = end > start ? 1 : -1;
+        let stepTime = Math.abs(Math.floor(duration / range));
+        let timer = setInterval(() => {
+          current += increment;
+          obj.textContent = current + "+";
+          if (current >= end) {
+            clearInterval(timer);
+          }
+        }, stepTime);
+      }
+
+      window.onload = function () {
+        animateCounter("userCount", 1, 1000, 2000);
+        animateCounter("lawyerCount", 1, 500, 2000);
+      };
+    </script>
+    
+    </script>
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="carousel-item" onclick="location.href='criminal.html'">
+          Criminal Lawyer
+        </div>
+        <div
+          class="carousel-item"
+          onclick="location.href='corporate-lawyers.html'"
+        >
+          Corporate Lawyer
+        </div>
+        <!-- Add more carousel items -->
+      </div>
+      <button class="prev-btn">&#10094;</button>
+      <button class="next-btn">&#10095;</button>
+    </div>
+
+    <script>
+      let index = 0;
+      const items = document.querySelectorAll(".carousel-item");
+
+      function showItem(i) {
+        index = (i + items.length) % items.length;
+        items.forEach(
+          (item, idx) => (item.style.display = idx === index ? "block" : "none")
+        );
+      }
+
+      document.querySelector(".prev-btn").onclick = () => showItem(index - 1);
+      document.querySelector(".next-btn").onclick = () => showItem(index + 1);
+    </script>
+
+    <section class="lawyer-types" id="lawyers">
+      <h2>Explore Lawyer Types</h2>
+      
+      <div class="grid-container">
+        <div class="grid-item" onclick="location.href='criminal.html'">
+          <img
+            src="https://tse4.mm.bing.net/th?id=OIP.u93ti-1WKzehpKCvqi9GrAHaDt&pid=Api&P=0&h=180"
+            alt="Criminal Lawyer Icon"
+          />
+          <h3>Criminal Lawyer</h3>
+        </div>
+        <div class="grid-item" onclick="location.href='corporate-lawyers.html'">
+          <img
+            src="https://tse1.mm.bing.net/th?id=OIP.Zl7UBBvy7JljUNsaKvpPcQHaE8&pid=Api&P=0&h=180"
+            alt="Corporate Lawyer Icon"
+          />
+          <h3>Corporate Lawyer</h3>
+        </div>
+        <div class="grid-item" onclick="location.href='family.html'">
+          <img
+            src="https://tse3.mm.bing.net/th?id=OIP.zQ3Cd8HBKO1dspJ6bImAkgHaE8&pid=Api&P=0&h=180"
+            alt="Family Lawyer Icon"
+          />
+          <h3>Family Lawyer</h3>
+        </div>
+
+        <div class="grid-item" onclick="location.href='labour.html'">
+          <img
+            src="https://tse1.mm.bing.net/th?id=OIP.GRMNq2Ekf1cqLmDRX5D9QQHaEK&pid=Api&P=0&h=180"
+            alt="Family Lawyer Icon"
+          />
+          <h3>Labour Lawyer</h3>
+        </div>
+
+        <div class="grid-item" onclick="location.href='personal.html'">
+          <img src="https://content.fortune.com/wp-content/uploads/2014/07/170902540.jpg" alt="Family Lawyer Icon" />
+          <h3>Personal Injury Lawyer</h3>
+        </div>
+
+        <div
+          class="grid-item"
+          onclick="location.href='Immigration-lawyer.html'"
+        >
+          <img src="https://tse4.mm.bing.net/th?id=OIP.23alpOlno4YZTzhsTvEfjQHaEq&pid=Api&P=0&h=180" alt="Family Lawyer Icon" />
+          <h3>Immigrant Lawyer</h3>
+        </div>
+
+        <div
+          class="grid-item"
+          onclick="location.href='environmental.html'"
+        >
+          <img
+            src="https://wallpapers.com/images/hd/environment-background-wz742ofb7mv20diy.jpg"
+            alt="enivoronment  Lawyer Icon"
+          />
+          <h3>Environmental Lawyer</h3>
+        </div>
+
+        <div class="grid-item" onclick="location.href='tax.html'">
+          <img
+            src="https://tse2.mm.bing.net/th?id=OIP.j0qfjCiZ2IxUB70CJuY62QHaFN&pid=Api&P=0&h=180"
+            alt="Family Lawyer Icon"
+          />
+          <h3>Tax Lawyer</h3>
+        </div>
+        <div class="grid-item" onclick="location.href='Cyber.html'">
+          <img src="https://tse3.mm.bing.net/th?id=OIP.6mcvKR81CrRrYPzy8vJ1CAHaEH&pid=Api&P=0&h=180" alt="Family Lawyer Icon" />
+          <h3>Cyber Lawyer</h3>
+        </div>
+        <div class="grid-item" onclick="location.href='demo.html'">
+          <img
+            src="https://png.pngtree.com/png-clipart/20230426/original/pngtree-free-demo-button-design-png-image_9107951.png"
+            alt="Corporate Lawyer Icon"
+          />
+          <h3>DEMO TESTING </h3>
+        </div>
+      </div>
+    </section>
+    <section class="advantages">
+      <h2>Why Choose Law Connect?</h2>
+      <div class="advantage-grid">
+        <div class="advantage-item">
+          <img
+            src="https://img.icons8.com/color/70/000000/scales.png"
+            alt="Expert Lawyers"
+          />
+          <h3>Expert Lawyers</h3>
+          <p>Access a network of highly qualified and experienced lawyers.</p>
+        </div>
+        <div class="advantage-item">
+          <img
+            src="https://img.icons8.com/color/70/000000/handshake.png"
+            alt="Personalized Approach"
+          />
+          <h3>Personalized Approach</h3>
+          <p>
+            We connect you with lawyers who understand your specific needs.
+          </p>
+        </div>
+        <div class="advantage-item">
+          <img
+            src="https://img.icons8.com/color/70/000000/time.png"
+            alt="Save Time & Money"
+          />
+          <h3>Save Time & Money</h3>
+          <p>Find the right legal help quickly and at a competitive price.</p>
+        </div>
+        <div class="advantage-item">
+          <img
+            src="https://img.icons8.com/color/70/000000/trust.png"
+            alt="Confidential & Secure"
+          />
+          <h3>Confidential & Secure</h3>
+          <p>Your information is always protected and handled with care.</p>
+        </div>
+      </div>
+    </section>
+    
+
+    <section class="testimonials" id="testimonials">
+      <h2>What Our Clients Say</h2>
+      <div class="testimonial-container">
+        <div class="testimonial">
+          <img
+            src="https://tse4.mm.bing.net/th?id=OIP.9mq-PSetz4WXTMh7n39SkQHaE7&pid=Api&P=0&h=180"
+            alt="Client 1"
+          />
+          <p>"The team at Instant Lawyer made the legal process effortless!"</p>
+          <h4>- Anupam Mitra</h4>
+        </div>
+        <div class="testimonial">
+          <img
+            src="https://i.pinimg.com/originals/96/57/39/96573940f04c1810b034c95547fb2b02.jpg"
+            alt="Client 2"
+          />
+          <p>"Professional, efficient, and affordable legal advice!"</p>
+          <h4>- Priya Singh</h4>
+        </div>
+        <div class="testimonial">
+          <img
+            src="https://as1.ftcdn.net/v2/jpg/02/94/62/14/1000_F_294621430_9dwIpCeY1LqefWCcU23pP9i11BgzOS0N.jpg"
+            alt="Client 3"
+          />
+          <p>
+            "I highly recommend Instant Lawyer for anyone seeking legal
+            assistance."
+          </p>
+          <h4>- Abhishek Roy</h4>
+        </div>
+        
+      </div>
+    </section>
+
+    <footer>&copy; 2025 Instant Lawyer. All rights reserved.</footer>
+ 
+    <script src="js/home.js"></script>
+  </body>
+  
+  </body>
+</html>

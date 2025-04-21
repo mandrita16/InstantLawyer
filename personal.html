@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personal Lawyer Profile</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap");
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        animation: fadeIn 1.5s ease-in-out;
+        color: #333;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      header {
+        background: linear-gradient(
+          to right,
+          rgba(251, 173, 71, 0.84) 0%,
+          rgba(120, 215, 249, 0.811) 100%
+        );
+        color: white;
+        text-align: center;
+        padding: 30px 10px;
+        font-size: 3rem;
+        font-weight: 900;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        margin-bottom: 40px;
+      }
+      /* Heading with two colors */
+      h1 {
+        font-size: 4.5rem;
+        margin: 20px 0;
+        text-align: center;
+        letter-spacing: 2px;
+        font-weight: 900;
+        line-height: 1.1;
+      }
+      h1 span {
+        color: #5a2e0f; /* Dark brown */
+        font-weight: bold;
+        display: block;
+        font-size: 5.2rem;
+      }
+      .profiles-section {
+        max-width: 1100px;
+        margin: 0 auto 60px;
+        padding: 0 20px;
+      }
+      .profiles-heading {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #3a7bd5;
+        margin-bottom: 40px;
+        text-align: center;
+        letter-spacing: 1px;
+      }
+      .profiles-container {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+      }
+      .profile-card {
+        background: #fff;
+        width: 280px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 20px;
+      }
+      .profile-card:hover {
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        transform: translateY(-5px);
+      }
+      .image-container {
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+        border-radius: 12px 12px 0 0;
+      }
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        transition: transform 0.3s ease;
+      }
+      .profile-card:hover .image-container img {
+        transform: scale(1.05);
+      }
+      .profile-info {
+        padding: 15px;
+      }
+      .profile-info h3 {
+        margin: 10px 0 8px;
+        font-size: 1.5rem;
+        color: #3a7bd5;
+        font-weight: 700;
+        text-transform: capitalize;
+      }
+      .profile-info p {
+        margin: 4px 0;
+        font-size: 1rem;
+        color: #555;
+      }
+      footer {
+        background: linear-gradient(to left, #a8edea, #fed6e3);
+        color: #fff;
+        text-align: center;
+        padding: 15px;
+        font-size: 1rem;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
+      }
+      @media (max-width: 900px) {
+        .profiles-container {
+          flex-direction: column;
+          align-items: center;
+        }
+        .profile-card {
+          width: 90%;
+          max-width: 400px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Personal <span>Lawyer India</span></h1>
+    </header>
+
+    <section class="profiles-section">
+      <div class="profiles-heading">Meet Our Personal Law Expert</div>
+      <div class="profiles-container">
+        <!-- Example profile -->
+        <div class="profile-card">
+          <div class="image-container">
+            <!-- Replace with actual Indian personal lawyer image -->
+            <img
+              src="https://images.shiksha.com/mediadata/images/1381393770phpLGfOBA.jpeg"
+              alt="Adv. Rahul Verma"
+            />
+          </div>
+          <div class="profile-info">
+            <h3>Adv. Rahul Verma</h3>
+            <p>
+              <strong>Specialization:</strong> Personal Injury & Civil
+              Litigation
+            </p>
+            <p><strong>Experience:</strong> 10 years</p>
+            <p><strong>Location:</strong> Mumbai</p>
+            <p><strong>Languages:</strong> Hindi, English</p>
+            <p>
+              Dedicated to helping individuals with personal injury, property
+              disputes, and family law matters.
+            </p>
+          </div>
+        </div>
+        <!-- Additional Lawyers -->
+        <div class="profile-card">
+          <div class="image-container">
+            <img
+              src="https://idealvillageconference.com/images/thiagarajan386.png"
+              alt="Adv. Anil Kumar"
+            />
+          </div>
+          <div class="profile-info">
+            <h3>Adv. Anil Kumar</h3>
+            <p><strong>Specialization:</strong> Property & Family Law</p>
+            <p><strong>Experience:</strong> 18 years</p>
+            <p><strong>Location:</strong> Kolkata</p>
+            <p><strong>Languages:</strong> Hindi, Bengali, English</p>
+            <p>
+              Expert in property disputes, family law, and succession matters
+              across India.
+            </p>
+          </div>
+        </div>
+
+        <div class="profile-card">
+          <div class="image-container">
+            <img
+              src="https://tse4.mm.bing.net/th?id=OIP.DGbOkhijL2qW0DoVcHA-dgAAAA&pid=Api&P=0&h=180"
+              alt="Adv. Rajesh Patel"
+            />
+          </div>
+          <div class="profile-info">
+            <h3>Adv. Rajesh Patel</h3>
+            <p><strong>Specialization:</strong> Corporate & Contract Law</p>
+            <p><strong>Experience:</strong> 22 years</p>
+            <p><strong>Location:</strong> New Delhi</p>
+            <p><strong>Languages:</strong> Hindi, English</p>
+            <p>
+              Specialist in corporate legal advisory, contract drafting, and
+              compliance for businesses.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>&copy; 2025 Personal Lawyers India. All rights reserved.</footer>
+  </body>
+</html>

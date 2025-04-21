@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instant Lawyer - Lawyer Profiles</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+      }
+
+      header {
+        background-color: #004d40;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      nav {
+        background: #00332c;
+        padding: 10px;
+        text-align: center;
+      }
+
+      nav ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      nav ul li {
+        display: inline;
+        margin: 0 15px;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      /* Lawyer Profiles Section */
+      .profiles-section {
+        padding: 40px;
+        text-align: center;
+      }
+
+      .profiles-heading {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #004d40;
+        text-transform: uppercase;
+        margin-bottom: 30px;
+      }
+
+      .profiles-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .profile-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 250px;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .profile-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .profile-card h3 {
+        color: #004d40;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .profile-card p {
+        font-size: 1rem;
+        color: #555;
+        margin: 5px 0;
+      }
+
+      footer {
+        background: #004d40;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>Instant Lawyer</div>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#types">Types of Lawyers</a></li>
+          <li><a href="#profiles">Lawyer Profiles</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="profiles-section" id="profiles">
+      <h2 class="profiles-heading">Lawyer Profiles</h2>
+      <div class="profiles-container">
+        <!-- Criminal Lawyers -->
+        <div class="profile-card">
+          <h3>Adv. Priya Nair</h3>
+          <p>Specialization: Criminal Defense</p>
+          <p>Experience: 10 years</p>
+          <p>Location: Mumbai</p>
+        </div>
+        <div class="profile-card">
+          <h3>Adv. Amit Gupta</h3>
+          <p>Specialization: Criminal Cases</p>
+          <p>Experience: 8 years</p>
+          <p>Location: Kolkata</p>
+        </div>
+
+        <!-- Environmental Lawyers -->
+        <div class="profile-card">
+          <h3>Adv. Rhea Kapoor</h3>
+          <p>Specialization: Environmental Law</p>
+          <p>Experience: 12 years</p>
+          <p>Location: Delhi</p>
+        </div>
+        <div class="profile-card">
+          <h3>Adv. Sanjay Roy</h3>
+          <p>Specialization: Climate Policies</p>
+          <p>Experience: 9 years</p>
+          <p>Location: Bengaluru</p>
+        </div>
+
+        <!-- Family Lawyers -->
+        <div class="profile-card">
+          <h3>Adv. Sunita Rao</h3>
+          <p>Specialization: Divorce and Family Law</p>
+          <p>Experience: 15 years</p>
+          <p>Location: Pune</p>
+        </div>
+        <div class="profile-card">
+          <h3>Adv. Rohit Verma</h3>
+          <p>Specialization: Family Mediation</p>
+          <p>Experience: 7 years</p>
+          <p>Location: Bangalore</p>
+        </div>
+
+        <!-- Corporate Lawyers -->
+        <div class="profile-card">
+          <h3>Adv. Nisha Malik</h3>
+          <p>Specialization: Corporate Compliance</p>
+          <p>Experience: 10 years</p>
+          <p>Location: Hyderabad</p>
+        </div>
+        <div class="profile-card">
+          <h3>Adv. Karan Singh</h3>
+          <p>Specialization: Mergers and Acquisitions</p>
+          <p>Experience: 12 years</p>
+          <p>Location: Gurgaon</p>
+        </div>
+
+        <!-- Additional lawyer types and profiles can be added similarly -->
+      </div>
+    </section>
+
+   
+  </body>
+</html>
+<body>
+  <div class="container" id="container">
+    <div class="form-container sign-in">
+      <form>
+        <h1>Sign In</h1>
+        <div class="social-icons">
+          <a href="#" class="icons"><i class="bx bxl-google"></i></a>
+          <a href="#" class="icons"><i class="bx bxl-facebook"></i></a>
+          <a href="#" class="icons"><i class="bx bxl-github"></i></a>
+          <a href="#" class="icons"><i class="bx bxl-linkedin"></i></a>
+        </div>
+        <span>Login With Email & Password</span>
+        <input type="email" placeholder="Enter E-mail" />
+        <input type="password" placeholder="Enter Password" />
+        <button>Sign In</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    const container = document.getElementById("container");
+  </script>
+</body>
+<section class="types-section" id="types">
+  <h2 class="types-heading">Different Types of Lawyers</h2>
+  <div class="types-container">
+    <div class="type-card">
+      <h3>Criminal Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Environmental Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Family Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Corporate Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Civil Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Intellectual Property Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Tax Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Cyber Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Estate Planning Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Worker's Compensation Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Public Interest Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Medical Malpractice Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Mergers and Acquisition Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Bankruptcy Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Securities Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Military Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Contract Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Government Lawyers</h3>
+    </div>
+    <div class="type-card">
+      <h3>Immigration Lawyers</h3>
+    </div>
+  </div>
+</section>

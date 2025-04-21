@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criminal Lawyers</title>
+    <style>
+      /* General Styling */
+      body {
+        font-family: "Georgia", serif; /* Professional serif font */
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        animation: fadeIn 1.5s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      header {
+        background: linear-gradient(to right, #ff7e5f, #99f8fa);
+        color: rgb(8, 7, 7);
+        text-align: center;
+        padding: 20px;
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .profiles-section {
+        padding: 40px;
+        text-align: center;
+      }
+
+      .profiles-heading {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #ff5733;
+        margin-bottom: 30px;
+        animation: slideDown 1.5s ease-in-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .profiles-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 20px;
+      }
+
+      .profile-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 250px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+        animation: zoomIn 1s ease-in;
+      }
+
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .profile-card:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+        background-color: #e0f7fa;
+      }
+
+      .profile-card img {
+        width: 100%;
+        height: 200px;
+        border-radius: 8px 8px 0 0;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .profile-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .profile-card h3 {
+        color: #ff7e5f;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 10px;
+        text-transform: capitalize; /* Ensures sentence case */
+        font-family: "Georgia", serif; /* Matching professional font */
+        transition: color 0.3s ease;
+      }
+
+      .profile-card:hover h3 {
+        color: #ff7e5f;
+      }
+
+      .profile-card p {
+        font-size: 1rem;
+        color: #555;
+        margin: 5px 0;
+      }
+      .info-section {
+        margin-top: 20px;
+      }
+      .info-section h3 {
+        color: #00aaff;
+      }
+      .info-section ul {
+        list-style-type: square;
+        padding-left: 20px;
+      }
+
+      footer {
+        background: linear-gradient(to left, #ff7e5f, #feb47b);
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-top: 20px;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>Criminal Lawyers</div>
+    </header>
+
+    <section class="profiles-section">
+      <div class="profiles-heading">Meet our criminal lawyers</div>
+      <div class="profiles-container">
+        <div class="profile-card" onclick="redirectToProfile('samik.html')">
+          <img
+            src="https://manchesterprize.org/wp-content/uploads/sites/8/2024/01/Samik-Chandarana.jpg"
+            alt="Adv. Samik Dutta"
+          />
+          <h3>Adv. Samik Dutta</h3>
+          <p>Specialization: Criminal Compliance</p>
+          <p>Experience: 10 years</p>
+          <p>Location: Hyderabad</p>
+          <p>language:Hindi,Bengali</p>
+        </div>
+
+        <div class="profile-card" onclick="redirectToProfile('soura.html')">
+          <img
+            src="https://th.bing.com/th/id/OIP.m1GcEBBAygRa_R2ZQcfl0gHaHW?rs=1&pid=ImgDetMain"
+            alt="Adv. Karan Singh"
+          />
+          <h3>Adv.Soura Murya</h3>
+          <p>Specialization: crime</p>
+          <p>Experience: 12 years</p>
+          <p>Location: Gurgaon</p>
+          <p>language:bengali</p>
+        </div>
+        <div class="profile-card" onclick="redirectToProfile('Adrija.html')">
+          <img
+            src="https://superlawyer.in/wp-content/uploads/2023/08/Photo-for-Superlawyer-01-1-768x1024.jpeg"
+            alt="Adv. Adrija Karmakar"
+          />
+          <h3>Adv. Adrija Karmakar</h3>
+          <p>Specialization:specializes in criminal law</p>
+          <p>Experience: 8 years</p>
+          <p>Location: Mumbai</p>
+          <p><language:B></language:B>engali</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>&copy; 2025 Corporate Lawyers. All rights reserved.</footer>
+  </body>
+  <script>
+    function redirectToProfile(page) {
+      window.location.href = page;
+    }
+  </script>
+</html>

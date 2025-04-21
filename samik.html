@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adv Samik Dutta - Profile</title>
+    <style>
+      /* ... (your CSS remains unchanged) ... */
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        animation: fadeIn 1.5s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      header {
+        background: linear-gradient(to right, #8be3f0, #feb47b);
+        color: rgb(0, 0, 0);
+        text-align: center;
+        padding: 20px;
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      }
+      .profile-section {
+        padding: 40px;
+        text-align: center;
+      }
+      .profile-card {
+        background: white;
+        margin: 0 auto;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 400px;
+        text-align: center;
+        padding: 20px;
+        animation: slideUp 1s ease-in-out;
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .profile-card img {
+        width: 100%;
+        height: 300px;
+        border-radius: 8px 8px 0 0;
+        object-fit: cover;
+      }
+      .profile-card h1 {
+        color: #ff7e5f;
+        font-size: 2rem;
+        margin-top: 20px;
+      }
+      .profile-card p {
+        font-size: 1rem;
+        color: #555;
+        margin: 10px 0;
+      }
+      .profile-card .contact-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background: #ff7e5f;
+        color: white;
+        text-decoration: none;
+        font-size: 1rem;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+      .profile-card .contact-btn:hover {
+        background: #ff7e5f;
+      }
+      .info-section {
+        margin-top: 15px;
+        text-align: left;
+        padding: 0 20px;
+      }
+      .info-section h3 {
+        color: #ff7e5f;
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+      .info-section ul {
+        list-style-type: square;
+        margin-left: 20px;
+        color: #555;
+        font-size: 1rem;
+      }
+      .chat-btn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #ff7e5f;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 50px;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .chat-box {
+        display: none;
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        width: 300px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+      }
+      .chat-box textarea {
+        width: 100%;
+        height: 80px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+        resize: none;
+      }
+      .chat-box button {
+        background: #ff7e5f;
+        color: white;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 5px;
+      }
+      .chat-messages {
+        max-height: 150px;
+        overflow-y: auto;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+        color: #333;
+      }
+      .chat-message {
+        margin-bottom: 4px;
+        padding: 4px 6px;
+        background: #f5f5f5;
+        border-radius: 4px;
+      }
+      footer {
+        background: linear-gradient(to left, #89ffeb, #feb47b);
+        color: rgb(0, 0, 0);
+        text-align: center;
+        padding: 15px;
+        margin-top: 20px;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <header>Adv. Samik Dutta - Profile</header>
+    <section class="profile-section">
+      <div class="profile-card">
+        <img
+          src="https://superlawyer.in/wp-content/uploads/2017/01/dilip-taur-3.jpg"
+          alt="Adv. samik dutta "
+        />
+        <h1>Adv. Samik Dutta</h1>
+        <p><strong>Specialization:</strong> Corporate Compliance</p>
+        <p><strong>Experience:</strong> 10 years</p>
+        <p><strong>Location:</strong> Hyderabad</p>
+        <p>
+          <strong>About:</strong> Adv. Samik Dutta is a highly skilled criminal
+          lawyer with a decade of experience handling complex criminal cases. He
+          has successfully defended clients across various legal scenarios,
+          providing strong representation in litigation and ensuring justice is
+          served. Known for his strategic approach and deep understanding of
+          criminal law, Adv. Dutta is recognized as one of the leading criminal
+          lawyers in Hyderabad..
+        </p>
+        <div class="info-section">
+          <h3>Key Achievements:</h3>
+          <ul>
+            <li>
+              Successfully closed over 50 mergers and acquisitions for
+              multinational companies.
+            </li>
+            <li>
+              Advised startups in securing funding and structuring equity
+              arrangements.
+            </li>
+            <li>
+              Recognized as a top corporate lawyer by Industry Leaders Magazine
+              (2024).
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chat Button -->
+        <button class="chat-btn" onclick="toggleChat()">Chat with Nisha</button>
+
+        <!-- Chat Box -->
+        <div class="chat-box" id="chatBox">
+          <div class="chat-messages" id="chatMessages"></div>
+          <textarea
+            id="chatInput"
+            placeholder="Type your message..."
+          ></textarea>
+          <button onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </section>
+    <footer>&copy; 2025 Instant Lawyer. All rights reserved.</footer>
+    <script>
+      // Toggle the chat box visibility
+      function toggleChat() {
+        let chatBox = document.getElementById("chatBox");
+        chatBox.style.display =
+          chatBox.style.display === "block" ? "none" : "block";
+      }
+
+      // Display a message in the chat box
+      function appendMessage(sender, text) {
+        const chatMessages = document.getElementById("chatMessages");
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "chat-message";
+        msgDiv.innerHTML = `<strong>${sender}:</strong> ${text}`;
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // Send message handler (frontend only, ready for backend)
+      function sendMessage() {
+        const input = document.getElementById("chatInput");
+        const message = input.value.trim();
+        if (!message) return;
+        appendMessage("You", message);
+
+        // TODO: Send 'message' to backend via fetch, WebSocket, or Socket.IO here
+        // Example for fetch (uncomment and adjust endpoint):
+        /*
+        fetch('/api/send-message', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ to: 'Nisha', message })
+        })
+        .then(res => res.json())
+        .then(data => {
+          // Optionally handle response or show confirmation
+        })
+        .catch(err => console.error('Send error:', err));
+        */
+
+        // Clear input
+        input.value = "";
+      }
+
+      // Example: Receiving a message from backend (for demonstration)
+      // In a real app, this would be triggered by WebSocket/Socket.IO event
+      // Example usage: appendMessage("Nisha", "Hello, how can I help you?");
+      // TODO: Your teammate should call appendMessage(sender, text) when a new message is received from backend
+
+      // Optional: Allow sending message with Enter key
+      document
+        .getElementById("chatInput")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter" && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+          }
+        });
+    </script>
+    
+<script src="js/samik.js"></script>
+</body>
+
+
+  </body>
+</html>

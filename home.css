@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instant Lawyer</title>
+    <style>
+        /* Styles for Instant Lawyer Website */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #004d40;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        nav {
+            background: #00332c;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(to right, #004d40, #00695c);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        .hero input {
+            padding: 10px;
+            width: 60%;
+            margin-top: 15px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .hero button {
+            padding: 10px 20px;
+            background: #ff9800;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .hero button:hover {
+            background: #e68900;
+        }
+
+        .services-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .service {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #004d40;
+            text-align: center;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: #e0f2f1;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            color: #2e8b57; /* Seaweed/Algae green */
+            font-size: 4rem; /* Big font size */
+            font-weight: bold; /* Bold text */
+            font-family: 'Caveat Brush', cursive; /* Unique algae-like font */
+            text-align: center; /* Center-align the text */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle depth effect */
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            display: block; /* Centers the image in the header */
+            margin: 10px auto; /* Adds space around the logo */
+            width: 100px; /* Adjusts the logo size */
+            height: auto; /* Maintains aspect ratio */
+            border-radius: 5px; /* Optional: Adds rounded corners for a softer look */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: Adds depth with shadow */
+        }
+
+        /* About Us Section */
+        .about-us {
+            background: linear-gradient(to right, #e0f7fa, #b2dfdb); /* Soothing gradient background */
+            padding: 50px;
+            text-align: center;
+            border-top: 5px solid #004d40;
+            border-bottom: 5px solid #004d40;
+        }
+
+        .about-us h2 {
+            font-size: 3rem; /* Large font size for the heading */
+            color: #004d40; /* Dark green color */
+            font-family: 'Georgia', serif; /* Elegant font */
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .about-us p {
+            font-size: 1.5rem; /* Comfortable font size for the paragraph */
+            color: #555; /* Neutral text color */
+            line-height: 1.8; /* Improved readability */
+            font-family: 'Arial', sans-serif; /* Clean and modern font */
+            margin: 0 auto; /* Center-align the text block */
+            width: 80%; /* Limit width for better readability */
+        }
+
+        .testimonial-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 40%;
+            text-align: center;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            color: #00796b;
+            font-weight: bold;
+            font-size: 1.2rem;
+            font-family: 'Georgia', serif; /* Different font style */
+        }
+
+        .our-services {
+            color: #2e8b57; /* Seaweed/Algae green */
+            font-size: 4rem; /* Big font size */
+            font-weight: bold; /* Bold text */
+            font-family: 'Caveat Brush', cursive; /* Unique algae-like font */
+            text-align: center; /* Center-align the text */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Subtle depth effect */
+            margin-bottom: 20px;
+        }
+
+        .testimonial h4 {
+            margin-top: 10px;
+            color: #004d40;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #004d40;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        // JavaScript functions
+        function searchLawyers() {
+            alert("Search functionality is under development!");
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <div class="logo">Instant Lawyer</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- About Us Section -->
+    <section class="about-us">
+        <div class="about-container">
+            <h2>About Us</h2>
+            <p>
+                At Instant Lawyer, we believe in simplifying the legal process for everyone. 
+                Our team of dedicated professionals works tirelessly to provide top-notch 
+                legal assistance tailored to your needs. With years of experience and 
+                countless satisfied clients, we are here to guide you every step of the way.
+            </p>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Find Your Legal Support Instantly</h1>
+        <p>Connecting you with top legal professionals in your area.</p>
+        <input type="text" placeholder="Search legal services..." id="search-bar">
+        <button onclick="searchLawyers()">Search</button>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2 class="our-services">Our Services</h2>
+        <div class="services-container">
+            <div class="service">Family Law</div>
+            <div class="service">Divorce Law</div>
+            <div class="service">Criminal Defense</div>
+            <div class="service">Business Law</div>
+            <div class="service">Property Law</div>
+            <div class="service">Civil Law</div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <div class="testimonials">
+        <h2>What Our Clients Say</h2>
+        <div class="testimonial-container">
+            <div class="testimonial">
+                <p>"The team at Instant Lawyer made the legal process effortless. I couldn't be happier with their support!"</p>
+                <h4>- Anupam Mitra</h4>
+            </div>
+            <div class="testimonial">
+                <p>"Professional, efficient, and affordable. They truly care about their clients!"</p>
+                <h4>- Priya Singh</h4>
+            </div>
+            <div class="testimonial">
+                <p>"I highly recommend Instant Lawyer for anyone seeking top-notch
