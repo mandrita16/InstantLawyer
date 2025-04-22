@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Law Connect Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(120deg, #fbad47 0%, #78d7f9 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Poppins", Arial, sans-serif;
+      }
+      .chatbot-glass {
+        width: 370px;
+        max-width: 96vw;
+        height: 540px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 22px;
+        box-shadow: 0 8px 40px 0 rgba(120, 215, 249, 0.14),
+          0 1.5px 8px 0 rgba(251, 173, 71, 0.11);
+        backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(255, 255, 255, 0.18);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+      .chatbot-glass-header {
+        background: linear-gradient(
+          to left,
+          rgba(251, 173, 71, 0.84) 0%,
+          rgba(120, 215, 249, 0.811) 100%
+        );
+        color: #fff;
+        padding: 20px 28px 16px 24px;
+        font-size: 19px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        border-bottom: 1.5px solid rgba(255, 255, 255, 0.16);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .chatbot-glass-header .close-btn {
+        background: rgba(255, 255, 255, 0.12);
+        border: none;
+        color: #fff;
+        font-size: 22px;
+        border-radius: 50%;
+        width: 34px;
+        height: 34px;
+        cursor: pointer;
+        transition: background 0.18s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .chatbot-glass-header .close-btn:hover {
+        background: rgba(251, 173, 71, 0.32);
+      }
+      .chatbot-glass-messages {
+        flex: 1;
+        padding: 22px 18px 10px 18px;
+        overflow-y: auto;
+        background: transparent;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .chatbot-glass-message {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+      }
+      .chatbot-glass-message.user {
+        justify-content: flex-end;
+      }
+      .chatbot-glass-message.bot {
+        justify-content: flex-start;
+      }
+      .chatbot-glass-bubble {
+        max-width: 78%;
+        padding: 12px 18px;
+        border-radius: 18px;
+        font-size: 15px;
+        line-height: 1.5;
+        word-break: break-word;
+        box-shadow: 0 2px 10px rgba(120, 215, 249, 0.08);
+        background: rgba(251, 173, 71, 0.13);
+        color: #222;
+        border: 1px solid rgba(120, 215, 249, 0.08);
+        backdrop-filter: blur(2px);
+        transition: background 0.2s;
+      }
+      .chatbot-glass-message.user .chatbot-glass-bubble {
+        background: linear-gradient(
+          120deg,
+          rgba(251, 173, 71, 0.77) 0%,
+          rgba(120, 215, 249, 0.811) 100%
+        );
+        color: #fff;
+        border-bottom-right-radius: 6px;
+        border-top-right-radius: 22px;
+        border-top-left-radius: 22px;
+      }
+      .chatbot-glass-message.bot .chatbot-glass-bubble {
+        background: rgba(255, 255, 255, 0.74);
+        color: #222;
+        border-bottom-left-radius: 6px;
+        border-top-right-radius: 22px;
+        border-top-left-radius: 22px;
+      }
+      .chatbot-glass-input-area {
+        display: flex;
+        border-top: 1.5px solid rgba(120, 215, 249, 0.13);
+        background: rgba(255, 255, 255, 0.45);
+        padding: 13px 14px;
+        align-items: flex-end;
+        gap: 10px;
+      }
+      .chatbot-glass-input-area textarea {
+        flex: 1;
+        border: none;
+        resize: none;
+        padding: 11px 14px;
+        font-size: 15px;
+        border-radius: 14px;
+        outline: none;
+        background: rgba(255, 255, 255, 0.9);
+        color: #222;
+        min-height: 38px;
+        max-height: 80px;
+        box-shadow: 0 1px 4px rgba(120, 215, 249, 0.08);
+        transition: box-shadow 0.2s;
+      }
+      .chatbot-glass-input-area textarea:focus {
+        box-shadow: 0 1px 10px rgba(120, 215, 249, 0.18);
+      }
+      .chatbot-glass-input-area button {
+        background: linear-gradient(
+          120deg,
+          rgba(251, 173, 71, 0.84) 0%,
+          rgba(120, 215, 249, 0.811) 100%
+        );
+        color: #fff;
+        border: none;
+        padding: 0 26px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 12px;
+        height: 40px;
+        transition: background 0.2s, box-shadow 0.2s;
+        box-shadow: 0 1px 6px rgba(120, 215, 249, 0.09);
+      }
+      .chatbot-glass-input-area button:hover {
+        background: linear-gradient(
+          120deg,
+          rgba(251, 173, 71, 1) 0%,
+          rgba(120, 215, 249, 1) 100%
+        );
+        box-shadow: 0 2px 12px rgba(120, 215, 249, 0.18);
+      }
+      .lawyer-card {
+        background: rgba(120, 215, 249, 0.1);
+        border: 1px solid rgba(120, 215, 249, 0.18);
+        border-radius: 8px;
+        padding: 10px 12px;
+        margin: 8px 0;
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        box-shadow: 0 1.5px 8px 0 rgba(251, 173, 71, 0.09);
+      }
+      .lawyer-status {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 10px;
+        flex-shrink: 0;
+      }
+      .online {
+        background: #4caf50;
+      }
+      .offline {
+        background: #ff5252;
+      }
+      .lawyer-info a {
+        color: #4e54c8;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      .lawyer-info a:hover {
+        text-decoration: underline;
+      }
+      @media (max-width: 480px) {
+        .chatbot-glass {
+          width: 99vw;
+          height: 99vh;
+          border-radius: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chatbot-glass" id="chatbotGlass">
+      <div class="chatbot-glass-header">
+        <span>Type your case and we will suggest you lawyer</span>
+        <button class="close-btn" onclick="window.close()" title="Close">
+          &times;
+        </button>
+      </div>
+      <div class="chatbot-glass-messages" id="glassMessages">
+        <!-- Messages will appear here -->
+      </div>
+      <div class="chatbot-glass-input-area">
+        <textarea
+          id="glassInput"
+          placeholder="Describe your legal issue..."
+        ></textarea>
+        <button id="glassSendBtn">Send</button>
+      </div>
+    </div>
+
+    <script>
+      // Lawyer database
+      const lawyers = [
+        {
+          name: "Emily Carter",
+          specialty: "Criminal",
+          experience: "12 years",
+          online: true,
+          contact: "emily@lawfirm.com",
+        },
+        {
+          name: "Raj Patel",
+          specialty: "Corporate",
+          experience: "8 years",
+          online: true,
+          contact: "raj@corplaw.com",
+        },
+        {
+          name: "Sarah Johnson",
+          specialty: "Family",
+          experience: "10 years",
+          online: false,
+          contact: "sarah@familylaw.com",
+        },
+        {
+          name: "Michael Chen",
+          specialty: "Cyber",
+          experience: "6 years",
+          online: true,
+          contact: "michael@cyberlaw.com",
+        },
+        {
+          name: "Priya Singh",
+          specialty: "Property",
+          experience: "14 years",
+          online: false,
+          contact: "priya@propertylaw.com",
+        },
+        {
+          name: "David Lee",
+          specialty: "Criminal",
+          experience: "9 years",
+          online: false,
+          contact: "david@lawfirm.com",
+        },
+        {
+          name: "Aisha Khan",
+          specialty: "Corporate",
+          experience: "7 years",
+          online: true,
+          contact: "aisha@corplaw.com",
+        },
+        {
+          name: "Olivia Brown",
+          specialty: "Family",
+          experience: "11 years",
+          online: true,
+          contact: "olivia@familylaw.com",
+        },
+        {
+          name: "Anil Mehra",
+          specialty: "Property",
+          experience: "13 years",
+          online: true,
+          contact: "anil@propertylaw.com",
+        },
+        {
+          name: "Sophia Wilson",
+          specialty: "Cyber",
+          experience: "5 years",
+          online: false,
+          contact: "sophia@cyberlaw.com",
+        },
+        {
+          name: "Vikram Desai",
+          specialty: "Criminal",
+          experience: "15 years",
+          online: true,
+          contact: "vikram@lawfirm.com",
+        },
+        {
+          name: "Julia Roberts",
+          specialty: "Corporate",
+          experience: "9 years",
+          online: false,
+          contact: "julia@corplaw.com",
+        },
+      ];
+
+      // Problem Type Identification
+      function identifyProblemType(input) {
+        input = input.toLowerCase();
+        const problemTypes = {
+          criminal: [
+            "crime",
+            "murder",
+            "theft",
+            "assault",
+            "fraud",
+            "bail",
+            "arrest",
+            "police",
+            "robbery",
+            "violence",
+            "stole",
+          ],
+          corporate: [
+            "contract",
+            "merger",
+            "startup",
+            "incorporation",
+            "compliance",
+            "company",
+            "business",
+            "shareholder",
+            "partnership",
+            "register",
+          ],
+          family: [
+            "divorce",
+            "custody",
+            "alimony",
+            "adoption",
+            "marriage",
+            "maintenance",
+            "child",
+            "domestic",
+            "wife",
+            "husband",
+          ],
+          property: [
+            "real estate",
+            "land dispute",
+            "rent",
+            "lease",
+            "property",
+            "eviction",
+            "title",
+            "ownership",
+          ],
+          cyber: [
+            "hacking",
+            "data breach",
+            "cyber crime",
+            "online fraud",
+            "phishing",
+            "privacy",
+            "internet",
+            "cyberbullying",
+            "social media",
+          ],
+        };
+
+        for (const [type, keywords] of Object.entries(problemTypes)) {
+          if (keywords.some((keyword) => input.includes(keyword))) {
+            return type.charAt(0).toUpperCase() + type.slice(1);
+          }
+        }
+        return "General";
+      }
+
+      // Bot Response
+      function getBotResponse(input) {
+        const problemType = identifyProblemType(input);
+        const matchingLawyers = lawyers.filter(
+          (lawyer) =>
+            lawyer.specialty.toLowerCase() === problemType.toLowerCase() &&
+            lawyer.online
+        );
+
+        let response = `Your case appears to be related to <strong>${problemType} Law</strong>.<br>`;
+        if (problemType !== "General") {
+          response += `You should consult a <strong>${problemType} Lawyer</strong>.<br>`;
+        } else {
+          response += `We could not determine the exact category. A general lawyer will assist you.<br>`;
+        }
+
+        if (matchingLawyers.length > 0) {
+          response += `${matchingLawyers.length} specialist(s) are available now:`;
+          response += matchingLawyers
+            .map(
+              (lawyer) => `
+          <div class="lawyer-card">
+            <div class="lawyer-status online"></div>
+            <div class="lawyer-info">
+              <strong>${lawyer.name}</strong><br>
+              Expertise: ${lawyer.specialty} Law<br>
+              Experience: ${lawyer.experience}<br>
+              Contact: <a href="mailto:${lawyer.contact}">${lawyer.contact}</a>
+            </div>
+          </div>
+        `
+            )
+            .join("");
+        } else {
+          response +=
+            "No specialists are currently online for this category. Our general lawyers will contact you soon.";
+        }
+        return response;
+      }
+
+      // Chat handling
+      const glassMessages = document.getElementById("glassMessages");
+      const glassInput = document.getElementById("glassInput");
+      const glassSendBtn = document.getElementById("glassSendBtn");
+
+      function appendGlassMessage(message, sender) {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = `chatbot-glass-message ${sender}`;
+        msgDiv.innerHTML = `<div class="chatbot-glass-bubble">${message}</div>`;
+        glassMessages.appendChild(msgDiv);
+        glassMessages.scrollTop = glassMessages.scrollHeight;
+      }
+
+      // Initial greeting
+      appendGlassMessage(
+        "👋 Welcome to Legal Assist! Please describe your legal issue.",
+        "bot"
+      );
+
+      function sendGlassMessage() {
+        const text = glassInput.value.trim();
+        if (text === "") return;
+        appendGlassMessage(text, "user");
+        glassInput.value = "";
+        setTimeout(() => {
+          appendGlassMessage(getBotResponse(text), "bot");
+        }, 600);
+      }
+
+      glassSendBtn.onclick = sendGlassMessage;
+      glassInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          sendGlassMessage();
+        }
+      });
+    </script>
+    <script src="chatbot.js"></script>
+  </body>
+</html>
