@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login & Sign Up with OTP</title>
   <style>
     * {
       margin: 0;
@@ -19,6 +19,7 @@
       justify-content: center;
       align-items: center;
       backdrop-filter: blur(5px);
+      color: #fff;
     }
 
     .login-container {
@@ -26,14 +27,15 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 20px;
       padding: 40px 30px;
-      width: 350px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15),
-                  0 0 40px rgba(0, 200, 255, 0.2),
-                  0 0 60px rgba(0, 128, 255, 0.3);
+      width: 360px;
+      box-shadow:
+        0 0 20px rgba(0, 255, 255, 0.15),
+        0 0 40px rgba(0, 200, 255, 0.2),
+        0 0 60px rgba(0, 128, 255, 0.3);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      color: #ffffff;
       text-align: center;
+      position: relative;
     }
 
     .login-container h2 {
@@ -45,7 +47,8 @@
     }
 
     .login-container input[type="email"],
-    .login-container input[type="password"] {
+    .login-container input[type="password"],
+    .login-container input[type="text"] {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
@@ -87,36 +90,191 @@
       transform: scale(1.03);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
     }
+
+    /* Toggle links */
+    .toggle-link {
+      margin-top: 15px;
+      color: #00bfff;
+      cursor: pointer;
+      text-decoration: underline;
+      font-size: 14px;
+      display: inline-block;
+    }
+
+    /* Success message */
+    .success-message {
+      color: #00ffcc;
+      font-weight: bold;
+      margin-top: 20px;
+      text-shadow: 0 0 8px #00ffe0;
+    }
   </style>
 </head>
 <body>
-  <div class="login-container">
+
+  <!-- Sign Up Container -->
+  <div class="login-container" id="signup-container">
+    <h2>Sign Up</h2>
+    <form id="signupForm">
+      <input type="email" id="signup-email" placeholder="Enter E-mail" required />
+      <input type="password" id="signup-password" placeholder="Enter Password" required />
+      <button type="submit">Sign Up</button>
+    </form>
+    <div>
+      Already have an account?
+      <span class="toggle-link" id="toSignIn">Sign In</span>
+    </div>
+  </div>
+
+  <!-- Sign In Container -->
+  <div class="login-container" id="signin-container" style="display:none;">
     <h2>Sign In</h2>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Enter E-mail" required>
-      <input type="password" id="password" placeholder="Enter Password" required>
+    <form id="signinForm">
+      <input type="email" id="signin-email" placeholder="Enter E-mail" required />
+      <input type="password" id="signin-password" placeholder="Enter Password" required />
       <button type="submit">Sign In</button>
     </form>
+    <div>
+      Don't have an account?
+      <span class="toggle-link" id="toSignUp">Sign Up</span>
+    </div>
+  </div>
+
+  <!-- OTP Verification Container -->
+  <div class="login-container" id="otp-container" style="display:none;">
+    <h2>Enter OTP</h2>
+    <p id="otp-info" style="margin-bottom: 15px;"></p>
+    <form id="otpForm">
+      <input type="text" id="otp-input" placeholder="Enter OTP" required maxlength="6" pattern="\d{6}" />
+      <button type="submit">Verify OTP</button>
+    </form>
+    <div>
+      <span class="toggle-link" id="resendOtp">Resend OTP</span>
+    </div>
+  </div>
+
+  <!-- Success Message Container -->
+  <div class="login-container" id="success-container" style="display:none;">
+    <h2>Success!</h2>
+    <p class="success-message" id="success-message"></p>
+    <button id="goToSignIn">Go to Sign In</button>
   </div>
 
   <script>
-    const form = document.getElementById('loginForm');
-    form.addEventListener('submit', function (e) {
+    // Variables to track state
+    let currentAction = null; // 'signup' or 'signin'
+    let generatedOTP = null;
+    let userEmail = null;
+    let userPassword = null;
+
+    // DOM elements
+    const signupContainer = document.getElementById('signup-container');
+    const signinContainer = document.getElementById('signin-container');
+    const otpContainer = document.getElementById('otp-container');
+    const successContainer = document.getElementById('success-container');
+    const otpInfo = document.getElementById('otp-info');
+    const successMessage = document.getElementById('success-message');
+
+    // Toggle links
+    document.getElementById('toSignIn').addEventListener('click', () => {
+      showContainer('signin');
+    });
+
+    document.getElementById('toSignUp').addEventListener('click', () => {
+      showContainer('signup');
+    });
+
+    document.getElementById('goToSignIn').addEventListener('click', () => {
+      showContainer('signin');
+    });
+
+    document.getElementById('resendOtp').addEventListener('click', () => {
+      sendOTP();
+    });
+
+    // Show container helper function
+    function showContainer(container) {
+      signupContainer.style.display = 'none';
+      signinContainer.style.display = 'none';
+      otpContainer.style.display = 'none';
+      successContainer.style.display = 'none';
+
+      if (container === 'signup') signupContainer.style.display = 'block';
+      else if (container === 'signin') signinContainer.style.display = 'block';
+      else if (container === 'otp') otpContainer.style.display = 'block';
+      else if (container === 'success') successContainer.style.display = 'block';
+    }
+
+    // Generate a 6-digit OTP
+    function generateOTP() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    // Simulate sending OTP (for demo only)
+    function sendOTP() {
+      generatedOTP = generateOTP();
+      alert(`Your OTP is: ${generatedOTP} (Demo only, in a real app this is sent via email/SMS)`);
+
+      otpInfo.textContent = `An OTP has been sent to ${userEmail}. Please enter it below.`;
+      document.getElementById('otp-input').value = '';
+    }
+
+    // Sign Up form submission handler
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
+      userEmail = document.getElementById('signup-email').value.trim();
+      userPassword = document.getElementById('signup-password').value.trim();
 
-      if (!email || !password) {
-        alert("Both fields are required!");
+      if (!userEmail || !userPassword) {
+        alert('Please fill in all fields.');
         return;
       }
 
-      console.log("Email:", email);
-      console.log("Password:", password);
-
-      alert("Login successful (demo only).");
+      currentAction = 'signup';
+      sendOTP();
+      showContainer('otp');
     });
+
+    // Sign In form submission handler
+    document.getElementById('signinForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      userEmail = document.getElementById('signin-email').value.trim();
+      userPassword = document.getElementById('signin-password').value.trim();
+
+      if (!userEmail || !userPassword) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      currentAction = 'signin';
+      sendOTP();
+      showContainer('otp');
+    });
+
+    // OTP form submission handler
+    document.getElementById('otpForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const enteredOTP = document.getElementById('otp-input').value.trim();
+
+      if (enteredOTP === generatedOTP) {
+        if (currentAction === 'signup') {
+          // Here you would save the user to the database after verification
+          successMessage.textContent = `Account created successfully for ${userEmail}! You can now sign in.`;
+        } else if (currentAction === 'signin') {
+          // Here you would verify credentials and log the user in
+          successMessage.textContent = `Welcome back, ${userEmail}! You are now signed in.`;
+        }
+        showContainer('success');
+      } else {
+        alert('Invalid OTP. Please try again.');
+      }
+    });
+
+    // Initialize with Sign Up visible
+    showContainer('signup');
   </script>
 </body>
 </html>
