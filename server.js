@@ -2,22 +2,45 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-// Use the port from environment variable or default to 3000 for local use
 const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
-    const filePath = path.join(__dirname, 'index.html');
+    // Get the file path from the request URL
+    let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
 
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    // Get the extension (html, css, js, etc.)
+    const ext = path.extname(filePath);
+    let contentType = 'text/html';
+
+    // Set correct content type
+    switch (ext) {
+        case '.css':
+            contentType = 'text/css';
+            break;
+        case '.js':
+            contentType = 'text/javascript';
+            break;
+        case '.json':
+            contentType = 'application/json';
+            break;
+        case '.png':
+            contentType = 'image/png';
+            break;
+        case '.jpg':
+        case '.jpeg':
+            contentType = 'image/jpeg';
+            break;
+    }
+
+    // Read and send the file
+    fs.readFile(filePath, (err, content) => {
         if (err) {
-            res.statusCode = 500;
-            res.end('Error loading the HTML file');
-            return;
+            res.writeHead(404, { 'Content-Type': 'text/html' });
+            res.end('404 - Page Not Found');
+        } else {
+            res.writeHead(200, { 'Content-Type': contentType });
+            res.end(content);
         }
-
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/html');
-        res.end(data);
     });
 });
 
