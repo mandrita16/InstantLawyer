@@ -108,6 +108,31 @@
       margin-top: 20px;
       text-shadow: 0 0 8px #00ffe0;
     }
+
+    /* Error message */
+    .error-message {
+      color: #ff6b6b;
+      font-weight: bold;
+      margin-top: 20px;
+      text-shadow: 0 0 8px rgba(255, 107, 107, 0.5);
+    }
+
+    /* Loading indicator */
+    .loader {
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid #00bfff;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      margin: 15px auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -116,8 +141,12 @@
   <div class="login-container" id="signup-container">
     <h2>Sign Up</h2>
     <form id="signupForm">
-      <input type="email" id="signup-email" placeholder="Enter E-mail" required />
-      <input type="password" id="signup-password" placeholder="Enter Password" required />
+      <input type="text" id="signup-fullname" placeholder="Full Name" required />
+      <input type="text" id="signup-username" placeholder="Username" required />
+      <input type="email" id="signup-email" placeholder="Email" required />
+      <input type="password" id="signup-password" placeholder="Password" required />
+      <div class="error-message" id="signup-error" style="display:none;"></div>
+      <div class="loader" id="signup-loader"></div>
       <button type="submit">Sign Up</button>
     </form>
     <div>
@@ -130,26 +159,15 @@
   <div class="login-container" id="signin-container" style="display:none;">
     <h2>Sign In</h2>
     <form id="signinForm">
-      <input type="email" id="signin-email" placeholder="Enter E-mail" required />
-      <input type="password" id="signin-password" placeholder="Enter Password" required />
+      <input type="text" id="signin-username" placeholder="Username or Email" required />
+      <input type="password" id="signin-password" placeholder="Password" required />
+      <div class="error-message" id="signin-error" style="display:none;"></div>
+      <div class="loader" id="signin-loader"></div>
       <button type="submit">Sign In</button>
     </form>
     <div>
       Don't have an account?
       <span class="toggle-link" id="toSignUp">Sign Up</span>
-    </div>
-  </div>
-
-  <!-- OTP Verification Container -->
-  <div class="login-container" id="otp-container" style="display:none;">
-    <h2>Enter OTP</h2>
-    <p id="otp-info" style="margin-bottom: 15px;"></p>
-    <form id="otpForm">
-      <input type="text" id="otp-input" placeholder="Enter OTP" required maxlength="6" pattern="\d{6}" />
-      <button type="submit">Verify OTP</button>
-    </form>
-    <div>
-      <span class="toggle-link" id="resendOtp">Resend OTP</span>
     </div>
   </div>
 
@@ -161,119 +179,191 @@
   </div>
 
   <script>
-    // Variables to track state
-    let currentAction = null; // 'signup' or 'signin'
-    let generatedOTP = null;
-    let userEmail = null;
-    let userPassword = null;
+    // API base URL - Updated based on error message
+    const API_BASE_URL = 'http://localhost:3000/api/v1/user';
+    
+    // For debugging
+    console.log("Using API base URL:", API_BASE_URL);
 
     // DOM elements
     const signupContainer = document.getElementById('signup-container');
     const signinContainer = document.getElementById('signin-container');
-    const otpContainer = document.getElementById('otp-container');
     const successContainer = document.getElementById('success-container');
-    const otpInfo = document.getElementById('otp-info');
     const successMessage = document.getElementById('success-message');
+    const signupError = document.getElementById('signup-error');
+    const signinError = document.getElementById('signin-error');
+    const signupLoader = document.getElementById('signup-loader');
+    const signinLoader = document.getElementById('signin-loader');
 
     // Toggle links
     document.getElementById('toSignIn').addEventListener('click', () => {
       showContainer('signin');
+      resetErrors();
     });
 
     document.getElementById('toSignUp').addEventListener('click', () => {
       showContainer('signup');
+      resetErrors();
     });
 
     document.getElementById('goToSignIn').addEventListener('click', () => {
       showContainer('signin');
-    });
-
-    document.getElementById('resendOtp').addEventListener('click', () => {
-      sendOTP();
+      resetErrors();
     });
 
     // Show container helper function
     function showContainer(container) {
       signupContainer.style.display = 'none';
       signinContainer.style.display = 'none';
-      otpContainer.style.display = 'none';
       successContainer.style.display = 'none';
 
       if (container === 'signup') signupContainer.style.display = 'block';
       else if (container === 'signin') signinContainer.style.display = 'block';
-      else if (container === 'otp') otpContainer.style.display = 'block';
       else if (container === 'success') successContainer.style.display = 'block';
     }
 
-    // Generate a 6-digit OTP
-    function generateOTP() {
-      return Math.floor(100000 + Math.random() * 900000).toString();
+    function resetErrors() {
+      signupError.style.display = 'none';
+      signinError.style.display = 'none';
     }
 
-    // Simulate sending OTP (for demo only)
-    function sendOTP() {
-      generatedOTP = generateOTP();
-      alert(`Your OTP is: ${generatedOTP} (Demo only, in a real app this is sent via email/SMS)`);
+    function showError(element, message) {
+      element.textContent = message;
+      element.style.display = 'block';
+    }
 
-      otpInfo.textContent = `An OTP has been sent to ${userEmail}. Please enter it below.`;
-      document.getElementById('otp-input').value = '';
+    function showLoader(loader) {
+      loader.style.display = 'block';
+    }
+
+    function hideLoader(loader) {
+      loader.style.display = 'none';
     }
 
     // Sign Up form submission handler
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      resetErrors();
+      showLoader(signupLoader);
 
-      userEmail = document.getElementById('signup-email').value.trim();
-      userPassword = document.getElementById('signup-password').value.trim();
+      const fullname = document.getElementById('signup-fullname').value.trim();
+      const username = document.getElementById('signup-username').value.trim();
+      const email = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value.trim();
 
-      if (!userEmail || !userPassword) {
-        alert('Please fill in all fields.');
+      if (!fullname || !username || !email || !password) {
+        showError(signupError, 'Please fill in all fields.');
+        hideLoader(signupLoader);
         return;
       }
 
-      currentAction = 'signup';
-      sendOTP();
-      showContainer('otp');
+      const userData = {
+        fullname,
+        username,
+        email,
+        password
+      };
+
+      console.log("Sending registration data:", userData);
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+          credentials: 'include'
+        });
+
+        console.log("Registration response status:", response.status);
+        
+        const data = await response.json();
+        console.log("Registration response data:", data);
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Registration failed');
+        }
+
+        // Registration successful
+        successMessage.textContent = `Account created successfully! You can now sign in.`;
+        showContainer('success');
+      } catch (error) {
+        console.error("Registration error:", error);
+        showError(signupError, error.message || 'An error occurred during sign up');
+      } finally {
+        hideLoader(signupLoader);
+      }
     });
 
     // Sign In form submission handler
-    document.getElementById('signinForm').addEventListener('submit', function(e) {
+    document.getElementById('signinForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      resetErrors();
+      showLoader(signinLoader);
 
-      userEmail = document.getElementById('signin-email').value.trim();
-      userPassword = document.getElementById('signin-password').value.trim();
+      const usernameOrEmail = document.getElementById('signin-username').value.trim();
+      const password = document.getElementById('signin-password').value.trim();
 
-      if (!userEmail || !userPassword) {
-        alert('Please fill in all fields.');
+      if (!usernameOrEmail || !password) {
+        showError(signinError, 'Please fill in all fields.');
+        hideLoader(signinLoader);
         return;
       }
 
-      currentAction = 'signin';
-      sendOTP();
-      showContainer('otp');
-    });
+      // Determine if input is email or username
+      const isEmail = usernameOrEmail.includes('@');
+      const payload = {
+        password
+      };
 
-    // OTP form submission handler
-    document.getElementById('otpForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const enteredOTP = document.getElementById('otp-input').value.trim();
-
-      if (enteredOTP === generatedOTP) {
-        if (currentAction === 'signup') {
-          // Here you would save the user to the database after verification
-          successMessage.textContent = `Account created successfully for ${userEmail}! You can now sign in.`;
-        } else if (currentAction === 'signin') {
-          // Here you would verify credentials and log the user in
-          successMessage.textContent = `Welcome back, ${userEmail}! You are now signed in.`;
-        }
-        showContainer('success');
+      if (isEmail) {
+        payload.email = usernameOrEmail;
       } else {
-        alert('Invalid OTP. Please try again.');
+        payload.username = usernameOrEmail;
+      }
+
+      console.log("Sending login data:", payload);
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+          credentials: 'include' // Important to include cookies
+        });
+
+        console.log("Login response status:", response.status);
+        
+        const data = await response.json();
+        console.log("Login response data:", data);
+
+        if (!response.ok) {
+          throw new Error(data.message || 'Login failed');
+        }
+
+        // Login successful - store tokens in localStorage if you need them client-side
+        if (data.data && data.data.accessToken) {
+          localStorage.setItem('accessToken', data.data.accessToken);
+        }
+        
+        // Redirect to dashboard or home page
+        successMessage.textContent = `Welcome back! You are now signed in.`;
+        showContainer('success');
+        
+        // In a real app, you might redirect instead:
+        window.location.href = '/home.html';
+      } catch (error) {
+        console.error("Login error:", error);
+        showError(signinError, error.message || 'Invalid credentials');
+      } finally {
+        hideLoader(signinLoader);
       }
     });
 
-    // Initialize with Sign Up visible
+    // Initialize with Sign Up visible by default
     showContainer('signup');
   </script>
 </body>
