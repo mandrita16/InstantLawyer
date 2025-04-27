@@ -2,23 +2,24 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
-// To replace __dirname in ES Modules
+// Required for __dirname to work in ES Modules
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 3000;
 
-const server = http.createServer((req, res) => {
-    // Get the file path from the request URL
-    let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url);
+// Serve static files from 'public' folder
+const publicDirectory = path.join(__dirname, 'public');
 
-    // Get the extension (html, css, js, etc.)
+const server = http.createServer((req, res) => {
+    // Get file path
+    let filePath = path.join(publicDirectory, req.url === '/' ? 'index.html' : req.url);
+
+    // Extension and Content-Type
     const ext = path.extname(filePath);
     let contentType = 'text/html';
 
-    // Set correct content type
     switch (ext) {
         case '.css':
             contentType = 'text/css';
@@ -38,9 +39,10 @@ const server = http.createServer((req, res) => {
             break;
     }
 
-    // Read and send the file
+    // Read file
     fs.readFile(filePath, (err, content) => {
         if (err) {
+            console.error('Error reading file:', filePath);
             res.writeHead(404, { 'Content-Type': 'text/html' });
             res.end('404 - Page Not Found');
         } else {
@@ -51,5 +53,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running at http://localhost:${PORT}`);
 });
