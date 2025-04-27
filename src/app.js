@@ -6,10 +6,15 @@ import appointmentRoutes from "./routes/lawyerRoutes.js";
 
 const app = express();
 
-app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+
+const corsOptions = {
+    origin: ['http://127.0.0.1:5500', 'http://localhost:5500'], // Add your frontend URLs here
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
-}))
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json({ limit: "16kb" }))
 app.use(express.urlencoded({ extended: true, limit: "16kb" }))
