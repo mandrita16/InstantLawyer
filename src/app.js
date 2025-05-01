@@ -8,7 +8,7 @@ const app = express();
 
 
 const corsOptions = {
-    origin: ['http://127.0.0.1:5500', 'http://localhost:5500'], // Add your frontend URLs here
+    origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'https://instantlawyer.vercel.app'], // Add your frontend URLs here
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
     allowedHeaders: ['Content-Type', 'Authorization']
