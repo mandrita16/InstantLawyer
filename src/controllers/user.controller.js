@@ -84,22 +84,8 @@ export const registerUser = asyncHandler(async (req, res) => {
             throw new ApiError(500, 'Something went wrong while creating user');
         }
 
-        if (createdUser && createdUser.email) {
-            // Generate and save OTP
-            const otp = generateOTP();
-            const expiryTime = await saveOTP(createdUser._id, otp);
-            
-            // Send OTP via email
-            try {
-                await sendOTPEmail(createdUser.email, otp);
-            } catch (error) {
-                console.error("Failed to send verification email:", error);
-                // Continue with registration even if email fails
-            }
-        }
-
         return res.status(201).json(
-            new ApiResponse(201, createdUser, "User Registered Successfully. Please check your email for verification code.")
+            new ApiResponse(201, createdUser, "User Registered Successfully")
         );
     } catch (error) {
         console.error("Registration error:", error);
@@ -314,93 +300,4 @@ export const resetUserPassword = asyncHandler(async (req, res) => {
             error: error.message
         });
     }
-});
-
-export const sendVerificationOTP = asyncHandler(async (req, res) => {
-    const { userId, email } = req.body;
-    
-    if (!userId || !email) {
-        throw new ApiError(400, 'User ID and email are required');
-    }
-    
-    const user = await User.findById(userId);
-    if (!user) {
-        throw new ApiError(404, 'User not found');
-    }
-    
-    // Generate and save OTP
-    const otp = generateOTP();
-    const expiryTime = await saveOTP(user._id, otp);
-    
-    // Send OTP via email
-    await sendOTPEmail(email, otp);
-    
-    return res.status(200).json(
-        new ApiResponse(
-            200,
-            { expiresAt: expiryTime },
-            'Verification code sent successfully'
-        )
-    );
-});
-
-export const verifyEmailOTP = asyncHandler(async (req, res) => {
-    const { userId, otp } = req.body;
-    
-    if (!userId || !otp) {
-        throw new ApiError(400, 'User ID and OTP are required');
-    }
-    
-    // Verify the OTP
-    await verifyOTP(userId, otp);
-    
-    // Mark email as verified
-    await User.findByIdAndUpdate(userId, {
-        isEmailVerified: true
-    });
-    
-    // Clear the OTP
-    await clearOTP(userId);
-    
-    const user = await User.findById(userId).select('-password -refreshToken -otp');
-    
-    return res.status(200).json(
-        new ApiResponse(
-            200,
-            { user },
-            'Email verified successfully'
-        )
-    );
-});
-
-export const resendOTP = asyncHandler(async (req, res) => {
-    const { userId } = req.body;
-    
-    if (!userId) {
-        throw new ApiError(400, 'User ID is required');
-    }
-    
-    const user = await User.findById(userId);
-    if (!user) {
-        throw new ApiError(404, 'User not found');
-    }
-    
-    if (!user.email) {
-        throw new ApiError(400, 'User has no email address');
-    }
-    
-    // Generate and save new OTP
-    const otp = generateOTP();
-    const expiryTime = await saveOTP(user._id, otp);
-    
-    // Send OTP via email
-    await sendOTPEmail(user.email, otp);
-    
-    return res.status(200).json(
-        new ApiResponse(
-            200,
-            { expiresAt: expiryTime },
-            'New verification code sent successfully'
-        )
-    );
 });
