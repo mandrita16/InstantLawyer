@@ -1,668 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Criminal Lawyers</title>
-  <!-- Modern 3D libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
-  <!-- Scroll animation library -->
-  <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
-  <!-- Tilt effect library -->
-  <script src="https://unpkg.com/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
-  <style>
-    /* Reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary: #000000;
-      --primary-glow: rgba(0, 0, 0, 0.7);
-      --secondary: #0066ff;
-      --secondary-glow: rgba(0, 102, 255, 0.7);
-      --dark: #111827;
-      --light: #f8fafc;
-      --card: rgba(255, 255, 255, 0.1);
-      --card-border: rgba(255, 255, 255, 0.2);
-      --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: var(--dark);
-      color: var(--light);
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    /* Flowing Background */
-    #vanta-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    /* Elegant text styling (no glow) */
-    .elegant-text {
-      color: #fff;
-      font-weight: 800;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #ffffff 0%, #d0d0d0 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .accent-text {
-      color: #fff;
-      background: linear-gradient(135deg, #333333 0%, var(--secondary) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Glassmorphism effect */
-    .glass {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
-
-    /* Header with 3D transform */
-    header {
-      padding: 2rem;
-      position: relative;
-      z-index: 10;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      border-radius: 15px;
-      transform: translateZ(50px);
-      transition: transform 0.5s ease;
-    }
-
-    .header-content:hover {
-      transform: translateZ(70px) scale(1.02);
-    }
-
-    .logo {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: 1px;
-    }
-
-    /* Navigation with glowing buttons */
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .nav-button {
-      position: relative;
-      padding: 0.8rem 1.5rem;
-      background: transparent;
-      color: white;
-      border: 2px solid var(--primary);
-      border-radius: 30px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      z-index: 1;
-    }
-
-    .nav-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: var(--primary);
-      z-index: -1;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.5s ease;
-    }
-
-    .nav-button:hover {
-      box-shadow: 
-        0 0 10px var(--primary-glow),
-        0 0 20px var(--primary-glow),
-        0 0 40px var(--primary-glow);
-    }
-
-    .nav-button:hover::before {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-
-    /* Hero section with parallax */
-    .hero {
-      height: 90vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-parallax {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-    }
-
-    .parallax-layer {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      will-change: transform;
-    }
-
-    .layer-1 {
-      background-image: url('https://images.unsplash.com/photo-1589391886645-d51941baf7fb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-      opacity: 0.3;
-      filter: blur(2px);
-    }
-
-    .layer-2 {
-      background-image: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      max-width: 800px;
-      padding: 2rem;
-    }
-
-    .hero-title {
-      font-size: 4.5rem;
-      font-weight: 800;
-      margin-bottom: 1.5rem;
-      line-height: 1.1;
-    }
-
-    .hero-subtitle {
-      font-size: 1.5rem;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
-
-    /* Glowing button with animation */
-    .glow-button {
-      position: relative;
-      padding: 1.2rem 2.5rem;
-      background: transparent;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      cursor: pointer;
-      overflow: hidden;
-      z-index: 1;
-      transition: all 0.4s ease;
-    }
-
-    .glow-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      z-index: -1;
-      border-radius: 50px;
-      transition: all 0.4s ease;
-    }
-
-    .glow-button::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: conic-gradient(
-        transparent, 
-        rgba(255, 255, 255, 0.3), 
-        transparent 30%
-      );
-      z-index: -1;
-      animation: rotate 4s linear infinite;
-    }
-
-    .glow-button:hover {
-      transform: translateY(-5px);
-      box-shadow: 
-        0 0 15px var(--primary-glow),
-        0 0 30px var(--primary-glow),
-        0 0 60px var(--primary-glow);
-    }
-
-    @keyframes rotate {
-      100% {
-        transform: rotate(1turn);
-      }
-    }
-
-    /* Profiles section */
-    .profiles-section {
-      padding: 8rem 2rem;
-      position: relative;
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 3.5rem;
-      font-weight: 800;
-      margin-bottom: 4rem;
-      position: relative;
-      display: inline-block;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      border-radius: 2px;
-    }
-
-    .profiles-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 3rem;
-      perspective: 2000px;
-    }
-
-    /* 3D Profile Cards with advanced effects */
-    .profile-card {
-      position: relative;
-      width: 320px;
-      height: 500px;
-      background: var(--card);
-      border-radius: 20px;
-      border: 1px solid var(--card-border);
-      overflow: hidden;
-      transform-style: preserve-3d;
-      transform: perspective(1000px);
-      box-shadow: var(--card-shadow);
-      cursor: pointer;
-      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    .profile-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom right,
-        rgba(255, 255, 255, 0.1),
-        rgba(255, 255, 255, 0.05),
-        transparent
-      );
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .profile-card:hover {
-      transform: perspective(1000px) rotateX(10deg) scale(1.03);
-      box-shadow: 
-        0 0 30px var(--primary-glow),
-        0 0 80px rgba(0, 0, 0, 0.5);
-    }
-
-    .card-img {
-      position: relative;
-      width: 100%;
-      height: 60%;
-      overflow: hidden;
-    }
-
-    .card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.8s ease;
-    }
-
-    .profile-card:hover .card-img img {
-      transform: scale(1.1);
-    }
-
-    .card-content {
-      position: relative;
-      padding: 1.5rem;
-      z-index: 1;
-      transform: translateZ(30px);
-    }
-
-    .card-name {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-info {
-      margin-bottom: 0.3rem;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-    }
-
-    .card-info strong {
-      margin-right: 0.5rem;
-      color: #ffffff; /* Changed from primary to white for better visibility */
-    }
-
-    .specialty-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      z-index: 10;
-    }
-
-    /* Glowing border effect */
-    .profile-card::after {
-      content: '';
-      position: absolute;
-      inset: -5px;
-      background: conic-gradient(
-        from 0deg at 50% 50%,
-        var(--primary),
-        var(--secondary),
-        var(--primary)
-      );
-      filter: blur(15px);
-      opacity: 0;
-      z-index: -1;
-      transition: opacity 0.6s ease;
-    }
-
-    .profile-card:hover::after {
-      opacity: 0.5;
-    }
-
-    /* Footer with 3D effect */
-    footer {
-      position: relative;
-      padding: 4rem 2rem;
-      text-align: center;
-      transform-style: preserve-3d;
-      perspective: 1000px;
-    }
-
-    .footer-content {
-      transform: translateZ(20px);
-      font-size: 1.2rem;
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-      .header-content {
-        flex-direction: column;
-        gap: 1.5rem;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Criminal Lawyers</title>
+    <style>
+      /* General Styling */
+      body {
+        font-family: "Georgia", serif; /* Professional serif font */
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+        animation: fadeIn 1.5s ease-in-out;
       }
 
-      .nav-links {
-        flex-wrap: wrap;
-        justify-content: center;
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
 
-      .hero-title {
-        font-size: 3rem;
+      header {
+        background: linear-gradient(to right, #ff7e5f, #99f8fa);
+        color: rgb(8, 7, 7);
+        text-align: center;
+        padding: 20px;
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
       }
 
-      .hero-subtitle {
-        font-size: 1.2rem;
+      .profiles-section {
+        padding: 40px;
+        text-align: center;
       }
 
-      .section-title {
+      .profiles-heading {
         font-size: 2.5rem;
+        font-weight: bold;
+        color: #ff5733;
+        margin-bottom: 30px;
+        animation: slideDown 1.5s ease-in-out;
       }
-    }
 
-    /* Floating elements animation */
-    .floating {
-      animation: floating 3s ease-in-out infinite;
-    }
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
 
-    @keyframes floating {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-      100% { transform: translateY(0px); }
-    }
+      .profiles-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        padding: 20px;
+      }
 
-    /* Pulse animation for elements */
-    .pulse {
-      animation: pulse 2s infinite;
-    }
+      .profile-card {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        width: 250px;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+        animation: zoomIn 1s ease-in;
+      }
 
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.05); opacity: 0.8; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-  </style>
-</head>
-<body>
-  <!-- Flowing gradient background instead of dots -->
-  <div id="vanta-bg"></div>
+      @keyframes zoomIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
 
-  <!-- Header with 3D effect -->
-  <header>
-    <div class="header-content glass">
-      <div class="logo accent-text">Criminal Lawyers</div>
-      <div class="nav-links">
-        <button class="nav-button">Home</button>
-        <button class="nav-button">Services</button>
-        <button class="nav-button">About Us</button>
-        <button class="nav-button">Contact</button>
+      .profile-card:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+        background-color: #e0f7fa;
+      }
+
+      .profile-card img {
+        width: 100%;
+        height: 200px;
+        border-radius: 8px 8px 0 0;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      .profile-card:hover img {
+        transform: scale(1.1);
+      }
+
+      .profile-card h3 {
+        color: #ff7e5f;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 10px;
+        text-transform: capitalize; /* Ensures sentence case */
+        font-family: "Georgia", serif; /* Matching professional font */
+        transition: color 0.3s ease;
+      }
+
+      .profile-card:hover h3 {
+        color: #ff7e5f;
+      }
+
+      .profile-card p {
+        font-size: 1rem;
+        color: #555;
+        margin: 5px 0;
+      }
+      .info-section {
+        margin-top: 20px;
+      }
+      .info-section h3 {
+        color: #00aaff;
+      }
+      .info-section ul {
+        list-style-type: square;
+        padding-left: 20px;
+      }
+
+      footer {
+        background: linear-gradient(to left, #ff7e5f, #feb47b);
+        color: white;
+        text-align: center;
+        padding: 15px;
+        margin-top: 20px;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>Criminal Lawyers</div>
+    </header>
+
+    <section class="profiles-section">
+      <div class="profiles-heading">Meet our criminal lawyers</div>
+      <div class="profiles-container">
+        <div class="profile-card" onclick="redirectToProfile('samik.html')">
+          <img
+            src="https://manchesterprize.org/wp-content/uploads/sites/8/2024/01/Samik-Chandarana.jpg"
+            alt="Adv. Samik Dutta"
+          />
+          <h3>Adv. Samik Dutta</h3>
+          <p>Specialization: Criminal Compliance</p>
+          <p>Experience: 10 years</p>
+          <p>Location: Hyderabad</p>
+          <p>language:Hindi,Bengali</p>
+        </div>
+
+        <div class="profile-card" onclick="redirectToProfile('soura.html')">
+          <img
+            src="https://th.bing.com/th/id/OIP.m1GcEBBAygRa_R2ZQcfl0gHaHW?rs=1&pid=ImgDetMain"
+            alt="Adv. Karan Singh"
+          />
+          <h3>Adv.Soura Murya</h3>
+          <p>Specialization: crime</p>
+          <p>Experience: 12 years</p>
+          <p>Location: Gurgaon</p>
+          <p>language:bengali</p>
+        </div>
+        <div class="profile-card" onclick="redirectToProfile('Adrija.html')">
+          <img
+            src="https://superlawyer.in/wp-content/uploads/2023/08/Photo-for-Superlawyer-01-1-768x1024.jpeg"
+            alt="Adv. Adrija Karmakar"
+          />
+          <h3>Adv. Adrija Karmakar</h3>
+          <p>Specialization:specializes in criminal law</p>
+          <p>Experience: 8 years</p>
+          <p>Location: Mumbai</p>
+          <p><language:B></language:B>engali</p>
+        </div>
       </div>
-    </div>
-  </header>
+    </section>
 
-  <!-- Hero section with parallax effect -->
-  <section class="hero">
-    <div class="hero-parallax">
-      <div class="parallax-layer layer-1" data-speed="0.2"></div>
-      <div class="parallax-layer layer-2" data-speed="0.4"></div>
-    </div>
-    <div class="hero-content glass">
-      <h1 class="hero-title elegant-text">Expert Legal Defense</h1>
-      <p class="hero-subtitle">Our team of experienced criminal lawyers is dedicated to protecting your rights and providing the strongest possible defense for your case.</p>
-      <button class="glow-button">Free Consultation</button>
-    </div>
-  </section>
-
-  <!-- Profiles section with 3D cards -->
-  <section class="profiles-section">
-    <h2 class="section-title accent-text">Meet Our Criminal Lawyers</h2>
-    <div class="profiles-container">
-      <!-- Profile Card 1 -->
-      <div class="profile-card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3" onclick="redirectToProfile('samik.html')">
-        <div class="specialty-badge">Criminal Compliance Expert</div>
-        <div class="card-img">
-          <img src="https://manchesterprize.org/wp-content/uploads/sites/8/2024/01/Samik-Chandarana.jpg" alt="Adv. Samik Dutta">
-        </div>
-        <div class="card-content">
-          <h3 class="card-name accent-text">Adv. Samik Dutta</h3>
-          <p class="card-info"><strong>Specialization:</strong> Criminal Compliance</p>
-          <p class="card-info"><strong>Experience:</strong> 10 years</p>
-          <p class="card-info"><strong>Location:</strong> Hyderabad</p>
-          <p class="card-info"><strong>Languages:</strong> Hindi, Bengali</p>
-        </div>
-      </div>
-
-      <!-- Profile Card 2 -->
-      <div class="profile-card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3" onclick="redirectToProfile('soura.html')">
-        <div class="specialty-badge">Senior Defense Attorney</div>
-        <div class="card-img">
-          <img src="https://th.bing.com/th/id/OIP.m1GcEBBAygRa_R2ZQcfl0gHaHW?rs=1&pid=ImgDetMain" alt="Adv. Soura Murya">
-        </div>
-        <div class="card-content">
-          <h3 class="card-name accent-text">Adv. Soura Murya</h3>
-          <p class="card-info"><strong>Specialization:</strong> Criminal Law</p>
-          <p class="card-info"><strong>Experience:</strong> 12 years</p>
-          <p class="card-info"><strong>Location:</strong> Gurgaon</p>
-          <p class="card-info"><strong>Languages:</strong> Bengali</p>
-        </div>
-      </div>
-
-      <!-- Profile Card 3 -->
-      <div class="profile-card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3" onclick="redirectToProfile('Adrija.html')">
-        <div class="specialty-badge">Trial Specialist</div>
-        <div class="card-img">
-          <img src="https://superlawyer.in/wp-content/uploads/2023/08/Photo-for-Superlawyer-01-1-768x1024.jpeg" alt="Adv. Adrija Karmakar">
-        </div>
-        <div class="card-content">
-          <h3 class="card-name accent-text">Adv. Adrija Karmakar</h3>
-          <p class="card-info"><strong>Specialization:</strong> Criminal Law</p>
-          <p class="card-info"><strong>Experience:</strong> 8 years</p>
-          <p class="card-info"><strong>Location:</strong> Mumbai</p>
-          <p class="card-info"><strong>Languages:</strong> Bengali</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer with 3D effect -->
-  <footer class="glass">
-    <div class="footer-content">
-      <p>&copy; 2025 Criminal Lawyers. All rights reserved.</p>
-    </div>
-  </footer>
-
+    <footer>&copy; 2025 Corporate Lawyers. All rights reserved.</footer>
+  </body>
   <script>
-    // Initialize VANTA.WAVES background (flowing gradient instead of dots)
-    VANTA.WAVES({
-      el: "#vanta-bg",
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.00,
-      scaleMobile: 1.00,
-      color: 0x000000, // Changed to black
-      shininess: 35.00,
-      waveHeight: 15.00,
-      waveSpeed: 0.75,
-      zoom: 0.65
-    });
-
-    // Parallax effect
-    document.addEventListener('mousemove', (e) => {
-      const layers = document.querySelectorAll('.parallax-layer');
-      const pageX = window.innerWidth / 2 - e.pageX;
-      const pageY = window.innerHeight / 2 - e.pageY;
-      
-      layers.forEach(layer => {
-        const speed = layer.getAttribute('data-speed');
-        const x = (pageX * speed) / 100;
-        const y = (pageY * speed) / 100;
-        
-        layer.style.transform = `translateX(${x}px) translateY(${y}px)`;
-      });
-    });
-
-    // Scroll parallax effect
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      const heroContent = document.querySelector('.hero-content');
-      
-      heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
-      
-      // Parallax for background layers on scroll
-      const layers = document.querySelectorAll('.parallax-layer');
-      layers.forEach(layer => {
-        const speed = layer.getAttribute('data-speed');
-        layer.style.transform = `translateY(${scrollY * speed}px)`;
-      });
-    });
-
-    // Initialize ScrollReveal for scroll animations
-    const sr = ScrollReveal({
-      origin: 'bottom',
-      distance: '60px',
-      duration: 1000,
-      delay: 200,
-      reset: false
-    });
-
-    sr.reveal('.section-title', { delay: 100 });
-    sr.reveal('.profile-card', { interval: 200 });
-    sr.reveal('.hero-content', { delay: 100 });
-    sr.reveal('.header-content', { origin: 'top' });
-
-    // Initialize VanillaTilt for 3D card effect
-    VanillaTilt.init(document.querySelectorAll(".profile-card"), {
-      max: 15,
-      speed: 400,
-      glare: true,
-      "max-glare": 0.3,
-    });
-
-    // Redirect function
     function redirectToProfile(page) {
       window.location.href = page;
     }
-
-    // Glowing button effect
-    const glowButton = document.querySelector('.glow-button');
-    glowButton.addEventListener('mousemove', (e) => {
-      const rect = glowButton.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      glowButton.style.setProperty('--x', `${x}px`);
-      glowButton.style.setProperty('--y', `${y}px`);
-    });
-
-    // Add floating animation to some elements
-    document.querySelectorAll('.specialty-badge').forEach(badge => {
-      badge.classList.add('floating');
-    });
   </script>
-</body>
 </html>
