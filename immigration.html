@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Immigration Lawyers</title>
+  <!-- Modern 3D libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+  <!-- Scroll animation library -->
+  <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js"></script>
+  <!-- Tilt effect library -->
+  <script src="https://unpkg.com/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #000000;
+      --primary-glow: rgba(0, 0, 0, 0.7);
+      --secondary: #0066ff;
+      --secondary-glow: rgba(0, 102, 255, 0.7);
+      --dark: #111827;
+      --light: #f8fafc;
+      --card: rgba(255, 255, 255, 0.1);
+      --card-border: rgba(255, 255, 255, 0.2);
+      --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Flowing Background */
+    #vanta-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Elegant text styling (no glow) */
+    .elegant-text {
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #ffffff 0%, #d0d0d0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .accent-text {
+      color: #fff;
+      background: linear-gradient(135deg, #333333 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Glassmorphism effect */
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    /* Header with 3D transform */
+    header {
+      padding: 2rem;
+      position: relative;
+      z-index: 10;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      transform: translateZ(50px);
+      transition: transform 0.5s ease;
+    }
+
+    .header-content:hover {
+      transform: translateZ(70px) scale(1.02);
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    /* Navigation with glowing buttons */
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .nav-button {
+      position: relative;
+      padding: 0.8rem 1.5rem;
+      background: transparent;
+      color: white;
+      border: 2px solid var(--primary);
+      border-radius: 30px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    .nav-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary);
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.5s ease;
+    }
+
+    .nav-button:hover {
+      box-shadow: 
+        0 0 10px var(--primary-glow),
+        0 0 20px var(--primary-glow),
+        0 0 40px var(--primary-glow);
+    }
+
+    .nav-button:hover::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Hero section with parallax */
+    .hero {
+      height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-parallax {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    .parallax-layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      will-change: transform;
+    }
+
+    .layer-1 {
+      background-image: url('https://images.unsplash.com/photo-1569974498991-d3c12a504f95?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+      opacity: 0.3;
+      filter: blur(2px);
+    }
+
+    .layer-2 {
+      background-image: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 2rem;
+    }
+
+    .hero-title {
+      font-size: 4.5rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Glowing button with animation */
+    .glow-button {
+      position: relative;
+      padding: 1.2rem 2.5rem;
+      background: transparent;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      overflow: hidden;
+      z-index: 1;
+      transition: all 0.4s ease;
+    }
+
+    .glow-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      z-index: -1;
+      border-radius: 50px;
+      transition: all 0.4s ease;
+    }
+
+    .glow-button::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent 30%
+      );
+      z-index: -1;
+      animation: rotate 4s linear infinite;
+    }
+
+    .glow-button:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 0 15px var(--primary-glow),
+        0 0 30px var(--primary-glow),
+        0 0 60px var(--primary-glow);
+    }
+
+    @keyframes rotate {
+      100% {
+        transform: rotate(1turn);
+      }
+    }
+
+    /* Profiles section */
+    .profiles-section {
+      padding: 8rem 2rem;
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 4rem;
+      position: relative;
+      display: inline-block;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    .profiles-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      perspective: 2000px;
+    }
+
+    /* 3D Profile Cards with advanced effects */
+    .profile-card {
+      position: relative;
+      width: 320px;
+      height: 500px;
+      background: var(--card);
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transform: perspective(1000px);
+      box-shadow: var(--card-shadow);
+      cursor: pointer;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05),
+        transparent
+      );
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .profile-card:hover {
+      transform: perspective(1000px) rotateX(10deg) scale(1.03);
+      box-shadow: 
+        0 0 30px var(--primary-glow),
+        0 0 80px rgba(0, 0, 0, 0.5);
+    }
+
+    .card-img {
+      position: relative;
+      width: 100%;
+      height: 60%;
+      overflow: hidden;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .profile-card:hover .card-img img {
+      transform: scale(1.1);
+    }
+
+    .card-content {
+      position: relative;
+      padding: 1.5rem;
+      z-index: 1;
+      transform: translateZ(30px);
+    }
+
+    .card-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-info {
+      margin-bottom: 0.3rem;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .card-info strong {
+      margin-right: 0.5rem;
+      color: #ffffff; /* Changed from primary to white for better visibility */
+    }
+
+    .specialty-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 10;
+    }
+
+    /* Glowing border effect */
+    .profile-card::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      background: conic-gradient(
+        from 0deg at 50% 50%,
+        var(--primary),
+        var(--secondary),
+        var(--primary)
+      );
+      filter: blur(15px);
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.6s ease;
+    }
+
+    .profile-card:hover::after {
+      opacity: 0.5;
+    }
+
+    /* Services section */
+    .services-section {
+      padding: 6rem 2rem;
+      position: relative;
+    }
+
+    .services-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      position: relative;
+      width: 300px;
+      height: 250px;
+      background: var(--card);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      transform-style: preserve-3d;
+      transition: all 0.5s ease;
+      border: 1px solid var(--card-border);
+    }
+
+    .service-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+    }
+
+    .service-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .service-description {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Footer with 3D effect */
+    footer {
+      position: relative;
+      padding: 4rem 2rem;
+      text-align: center;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .footer-content {
+      transform: translateZ(20px);
+      font-size: 1.2rem;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .hero-title {
+        font-size: 3rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+      }
+    }
+
+    /* Floating elements animation */
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+
+    @keyframes floating {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+
+    /* Pulse animation for elements */
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Flowing gradient background instead of dots -->
+  <div id="vanta-bg"></div>
+
+  <!-- Header with 3D effect -->
+  <header>
+    <div class="header-content glass">
+      <div class="logo accent-text">Immigration Lawyers</div>
+      <div class="nav-links">
+        <button class="nav-button">Home</button>
+        <button class="nav-button">Services</button>
+        <button class="nav-button">About Us</button>
+        <button class="nav-button">Contact</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero section with parallax effect -->
+  <section class="hero">
+    <div class="hero-parallax">
+      <div class="parallax-layer layer-1" data-speed="0.2"></div>
+      <div class="parallax-layer layer-2" data-speed="0.4"></div>
+    </div>
+    <div class="hero-content glass">
+      <h1 class="hero-title elegant-text">Your Path to Legal Immigration</h1>
+      <p class="hero-subtitle">Our team of experienced immigration attorneys is dedicated to helping individuals, families, and businesses navigate the complex immigration system with confidence.</p>
+      <button class="glow-button">Free Consultation</button>
+    </div>
+  </section>
+
+  <!-- Services section -->
+  <section class="services-section">
+    <h2 class="section-title accent-text">Our Immigration Services</h2>
+    <div class="services-container">
+      <div class="service-card glass">
+        <div class="service-icon">🏠</div>
+        <h3 class="service-title">Family Immigration</h3>
+        <p class="service-description">Reunite with your loved ones through family-based petitions, fiancé visas, and adjustment of status applications.</p>
+      </div>
+      
+      <div class="service-card glass">
+        <div class="service-icon">💼</div>
+        <h3 class="service-title">Employment Visas</h3>
+        <p class="service-description">Secure work visas, including H-1B, L-1, O-1, and employment-based green cards for professionals.</p>
+      </div>
+      
+      <div class="service-card glass">
+        <div class="service-icon">🛡️</div>
+        <h3 class="service-title">Asylum & Refugee</h3>
+        <p class="service-description">Obtain protection in the United States for those fleeing persecution in their home countries.</p>
+      </div>
+      
+      <div class="service-card glass">
+        <div class="service-icon">⚖️</div>
+        <h3 class="service-title">Deportation Defense</h3>
+        <p class="service-description">Strong legal representation for removal proceedings and immigration court hearings.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profiles section with 3D cards -->
+  <section class="profiles-section">
+    <h2 class="section-title accent-text">Meet Our Immigration Lawyers</h2>
+    <div class="profiles-container">
+      <!-- Profile Card 1 -->
+      <div class="profile-card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3" onclick="redirectToProfile('priya.html')">
+        <div class="specialty-badge">Family Immigration Expert</div>
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="Adv. Priya Sharma">
+        </div>
+        <div class="card-content">
+          <h3 class="card-name accent-text">Adv. Priya Sharma</h3>
+          <p class="card-info"><strong>Specialization:</strong> Family Immigration</p>
+          <p class="card-info"><strong>Experience:</strong> 12 years</p>
+          <p class="card-info"><strong>Location:</strong> New York</p>
+          <p class="card-info"><strong>Languages:</strong> English, Hindi, Spanish</p>
+        </div>
+      </div>
+
+      <!-- Profile Card 2 -->
+      <div class="profile-card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3" onclick="redirectToProfile('miguel.html')">
+        <div class="specialty-badge">Deportation Defense Specialist</div>
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1556157382-97eda2f9e2bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Adv. Miguel Rodriguez">
+        </div>
+        <div class="card-content">
+          <h3 class="card-name accent-text">Adv. Miguel Rodriguez</h3>
+          <p class="card-info"><strong>Specialization:</strong> Deportation Defense</p>
+          <p class="card-info"><strong>Experience:</strong> 15 years</p>
+          <p class="card-info"><strong>Location:</strong> Los Angeles</p>
+          <p class="card-info"><strong>Languages:</strong> English, Spanish</p>
+        </div>
+      </div>
+
+      <!-- Profile Card 3 -->
+      <div class="profile-card" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3" onclick="redirectToProfile('sarah.html')">
+        <div class="specialty-badge">Business Immigration Expert</div>
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=650&q=80" alt="Adv. Sarah Chen">
+        </div>
+        <div class="card-content">
+          <h3 class="card-name accent-text">Adv. Sarah Chen</h3>
+          <p class="card-info"><strong>Specialization:</strong> Business Immigration</p>
+          <p class="card-info"><strong>Experience:</strong> 10 years</p>
+          <p class="card-info"><strong>Location:</strong> San Francisco</p>
+          <p class="card-info"><strong>Languages:</strong> English, Mandarin, Cantonese</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer with 3D effect -->
+  <footer class="glass">
+    <div class="footer-content">
+      <p>&copy; 2025 Immigration Lawyers. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize VANTA.WAVES background (flowing gradient instead of dots)
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0x000000, // Black color
+      shininess: 35.00,
+      waveHeight: 15.00,
+      waveSpeed: 0.75,
+      zoom: 0.65
+    });
+
+    // Parallax effect
+    document.addEventListener('mousemove', (e) => {
+      const layers = document.querySelectorAll('.parallax-layer');
+      const pageX = window.innerWidth / 2 - e.pageX;
+      const pageY = window.innerHeight / 2 - e.pageY;
+      
+      layers.forEach(layer => {
+        const speed = layer.getAttribute('data-speed');
+        const x = (pageX * speed) / 100;
+        const y = (pageY * speed) / 100;
+        
+        layer.style.transform = `translateX(${x}px) translateY(${y}px)`;
+      });
+    });
+
+    // Scroll parallax effect
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const heroContent = document.querySelector('.hero-content');
+      
+      heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
+      
+      // Parallax for background layers on scroll
+      const layers = document.querySelectorAll('.parallax-layer');
+      layers.forEach(layer => {
+        const speed = layer.getAttribute('data-speed');
+        layer.style.transform = `translateY(${scrollY * speed}px)`;
+      });
+    });
+
+    // Initialize ScrollReveal for scroll animations
+    const sr = ScrollReveal({
+      origin: 'bottom',
+      distance: '60px',
+      duration: 1000,
+      delay: 200,
+      reset: false
+    });
+
+    sr.reveal('.section-title', { delay: 100 });
+    sr.reveal('.profile-card', { interval: 200 });
+    sr.reveal('.service-card', { interval: 150 });
+    sr.reveal('.hero-content', { delay: 100 });
+    sr.reveal('.header-content', { origin: 'top' });
+
+    // Initialize VanillaTilt for 3D card effect
+    VanillaTilt.init(document.querySelectorAll(".profile-card"), {
+      max: 15,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.3,
+    });
+
+    // Redirect function
+    function redirectToProfile(page) {
+      window.location.href = page;
+    }
+
+    // Glowing button effect
+    const glowButton = document.querySelector('.glow-button');
+    glowButton.addEventListener('mousemove', (e) => {
+      const rect = glowButton.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      glowButton.style.setProperty('--x', `${x}px`);
+      glowButton.style.setProperty('--y', `${y}px`);
+    });
+
+    // Add floating animation to some elements
+    document.querySelectorAll('.specialty-badge').forEach(badge => {
+      badge.classList.add('floating');
+    });
+    
+    // Add floating animation to service icons
+    document.querySelectorAll('.service-icon').forEach(icon => {
+      icon.classList.add('floating');
+    });
+  </script>
+</body>
+</html>
